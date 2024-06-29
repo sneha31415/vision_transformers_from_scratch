@@ -76,13 +76,13 @@ if we just find where the original basis vector go after the transformation we c
 
 ![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled.png)
 
-
+![https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image.png](https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image.png)
 
 For 2D-space, we can arrange the coordinates where i and j lands in a 2x2 matrix
 
 ![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled%201.png)
 
-
+![https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image1.png](https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image1.png)
 
 Here, (a,c) is where i lands and (b,d) is where j lands.
 
@@ -217,3 +217,48 @@ Used to find solution to linear system of equations.
 The given system is written as matrix multiplication of a unknown vector [x y] or [x y z] and a transformation which is equal to some given vector;
 
 So, the det(A) should not be zero, where A is the transforming matrix.
+
+for AX = B,
+
+Geometric interpretation:
+
+1. Consider area of parallelogram formed by i and input[x y] just being 1*y, similarly area between j and [x y] is x.
+2. To solve for y after the transformation, the area is scaled up by det(A) and the area is just area between new basis vector i and output vector B. so y =  new_Area/det(A)
+
+![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled%207.png)
+
+similar idea apply to 3D i.e. linear system with three variables.
+
+---
+
+## Chapter 13: Change of Basis
+
+We can find the coordinates after a transformation in a space with some different basic vector by first transforming in into out standard basis vectors(i,j) and then applying the transformation and then transforming back by using the inverse basis vectors of that space.
+
+---
+
+## Chapter 14: Eigenvectors and Eigenvalues
+
+Eigenvectors are those vectors in a particular transformation that stay on their span even after the transformation and the value by which they get scaled is called its eigenvalue.
+
+![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled%208.png)
+
+this can be written as:
+
+![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled%209.png)
+
+An eigenbasis for a matrix A is a basis consisting of eigenvectors of A.
+
+---
+
+## Chapter 16: Abstract vector spaces
+
+For example,
+
+Interpretation of functions as vectors comprising of basis functions.
+
+e.g. for polynomials the basis function would be 1, x, x^2,.. .. 
+
+so derivative would be a linear transformation, so the transforming matrx would be column comprising of derivative of basis functions.
+
+![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled%2010.png)
