@@ -76,13 +76,12 @@ if we just find where the original basis vector go after the transformation we c
 
 ![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled.png)
 
-![https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image.png](https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image.png)
+
 
 For 2D-space, we can arrange the coordinates where i and j lands in a 2x2 matrix
 
 ![Untitled](Linear%20Algebra%20Notes%20f58400cb6eec4aadbad204f8c5e40a17/Untitled%201.png)
 
-![https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image1.png](https://file+.vscode-resource.vscode-cdn.net/home/shinymack/vision_transformers_from_scratch/notes/images/image1.png)
 
 Here, (a,c) is where i lands and (b,d) is where j lands.
 
