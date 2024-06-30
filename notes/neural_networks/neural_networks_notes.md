@@ -4,7 +4,7 @@
 
 A **neural network** is a computational model which consists of **interconnected layers of nodes** (neurons) that can learn to perform tasks by adjusting some **parameters (weights and biases in this case)** connecting them together.
 
-e.g. A basic form of this is a **Linear Regression** model which aims to find the line of best fit for the data which it is given, so the parameters here are the **slope and the y-intercept** of the line. In this model there is only one input layer and one output layer.
+e.g. A basic form of this is a **Linear Regression** model which aims to find the line of best fit for the data which it is given, so the parameters here are the **slope and the y-intercept** of the [line.IN](http://line.IN) this model there is only one input layer and one output layer.
 
 Convolutional Neural Network(CNN) → Good of image recognition
 
@@ -73,6 +73,8 @@ The activation’s of one layer bring about the activation in the next layer.
         
     3. **tanh**
     
+    ---
+    
     ## Chapter 2: Gradient descent, how neural networks learn
     
     It is used to minimize the cost function in neural networks.
@@ -98,3 +100,72 @@ The activation’s of one layer bring about the activation in the next layer.
     ![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%209.png)
     
     The algorithm used to make these changes to weights and biases is called ***Backpropagation.***
+    
+
+---
+
+## Chapter 3: What is backpropagation really doing?
+
+Initially when the weights and biases are all random the output for a training example is going to look like this:
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2010.png)
+
+Now we know what adjustments should be made,
+
+For example we consider this training example in which the “2” neuron which has 0.2 activation which should be 1.0.
+
+So we pay attention to its connections to the previous layer,
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2011.png)
+
+Here the weights of the connection with higher activation neurons in the previous layer has a greater impact than neurons wit lower activation.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2012.png)
+
+Now we get what changes should be made to weights corresponding to each connection for the last second layer.
+
+Once we have list of those changes we can apply the same to third to last later. This can be applied recursively to all layers before them too.
+
+This process is repeated to for all the training examples.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2013.png)
+
+This average of nudges is somewhat proportional to the negative gradient of the cost function.
+
+### Stochastic Gradient Descent:
+
+In SGD, instead of using the entire dataset for each iteration, only a single random training example (or a **small batch**) is selected to calculate the gradient and update the model parameters. This random selection introduces randomness into the optimization process, hence the term “stochastic” in stochastic Gradient Descent.
+
+This way of dividing into mini batches does not take as much computation power as we would need to train from the whole dataset at once.
+
+---
+
+## Chapter 4: Backpropagation Calculus
+
+For example we consider a network with only one neuron in each layer.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2014.png)
+
+and lets focus on only last 2 layers of the network.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2015.png)
+
+So here y being the desired output the cost is the squared error, with the notations for the neurons as shown in the image.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2016.png)
+
+This tree diagram shows relation between everything.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2017.png)
+
+Applying the chain rule we get something line this,
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2018.png)
+
+we also find the sensitivity of the cost function to the biases.
+
+Still this is one component of the gradient vector, as it takes for all weights and biases.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2019.png)
+
+Now we can apply the same chain rule idea to layers before that.
