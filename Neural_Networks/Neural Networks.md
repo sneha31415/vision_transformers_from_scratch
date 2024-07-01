@@ -286,3 +286,129 @@ Fig. 19
 ![Fig. 20](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-06-29_22-26-04.png)
 
 Fig. 20
+
+# 6. Attention in Transformers :-
+
+## a. *Overview :*
+
+- The aim of a transformer is to change the embedding so that it ultimately encodes the contextual meaning of words in a sentence rater than just its literal meaning.
+- Consider the word ‘,ole’ in the 3 sentences below. The contextual meaning of the word ‘mole’ is diefferent in all 3 of them, but the initial embedding of the word ‘mole’ is the same for all 3 sentences.
+
+ 
+
+![Fig. 21](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_11-35-31.png)
+
+Fig. 21
+
+- An ‘Attention’ block (where the process of ‘Attention’ occurs) is the place where the embeddings of the tokens in a sentence interact with each other and change themselves to reflect their contextual meaning.
+
+![Fig. 22](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_11-35-55.png)
+
+Fig. 22
+
+## b. *Single Head of Attention (Self Attention):-*
+
+- The embedding, which is in the form of a vector, tells what the token is and what is its position in the given sentence.
+- When the tokens are ‘attended’, the embeddings are changed by opeartions like matrix multiplication, so that the embeddings gain contextual meaning, just like relating a noun to adjectives preceding it.
+- There is a vector, with relatively smaller dimensions (here, 128) which is the ‘Query’ vector. This is obtained, for each embedding, by multiplying a ‘Query Matrix’, with 128 rows and 12,288 columns, with each of the embeddings. The Query matrix initially has random elements but they are refined with training.
+- This ca be thought of as though the query matrix maps the high dimensional embedding to a low dimensional Query/Key space.
+
+![Fig. 23](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_12-21-21.png)
+
+Fig. 23
+
+- There is another matrix - ‘Key’ Matrix, with 128 rows and 12,288 columns, which is also multiplied with each embedding to obtain ‘Key’ Vectors. Initially they have random elements but they get refined with training. Like the query matrix, it also maps the high dimensional embedding to low dimensiona query/key space.
+- Basicallly, the query vectors is like questioning the embeddings about the contextual meaning and the key vectors are like answers to those questions.
+
+![Fig. 24](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_12-32-24.png)
+
+Fig. 24
+
+- For instance, in the above sentence ‘**A fluffy blue creature roamed the verdant forest**’, the key vectors of tokens ‘fluffy’ and ‘blue’ align to a great extent with the query of the token ‘creature’, indicating contextal relation among those words. This similarity can be understood mathematically as a high value of the dot product of query vector with key vector. These values are filled in a grid termed as ‘Attention Pattern’, which signifies how relevant tokens at the left are, w.r.t. to the tokens at the top.
+
+![Fig. 25](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_12-36-38.png)
+
+Fig. 25
+
+![Fig. 26](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_12-37-45.png)
+
+Fig. 26
+
+- The larger dots correspond to a higher dot prduct of query vector and key vector. As per the above discussion, in the language of machine learning, we can state that the embeddings ‘fluffy’ and ‘blue’ attend to the embedding ‘creature’. (Fig. 26)
+- These values can lie anywhere from negative infinity to positive infinity. For the next step, where we need to normalize thes values as that of a probability distribution. So, we apply softmax to each column.
+- This operation can be represented as an expression as shown below. The meaning of various terms is same as discussed above. Q and K dentoe the array of query and key vectors for al tokens. Also, it has been found out that it is better for numerical stability to divide each term in the attention pattern by the squate root of the dimension of the key query space, before applying softmax.
+
+![Fig. 27](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_12-46-35.png)
+
+Fig. 27
+
+![Fig. 28](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_12-47-00.png)
+
+Fig. 28
+
+- It turns out to be more efficient to let the transformer predict the next token for all the tokens in the starting sentece given to the transformer as well; this is because due to this, a single example trains it as much as a bunch of examples.
+
+![Fig. 29](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_16-04-26.png)
+
+Fig. 29
+
+- Also, the later tokens shouldn’t affect the contextual meaning of previous tokens, so we need the following entries in the attention pattern, marked in red, to be zero, in the probability distribution. Hence, we set them to negative infinity. This process is termed as ‘Masking’ and was applied in the training phase of GPT-3.
+
+![Fig. 30](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_16-20-32.png)
+
+Fig. 30
+
+![Fig. 31](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_16-23-15.png)
+
+Fig. 31
+
+- The size of attention pattern is the square of context size.
+- Now, the tokens, which are related to other tokens, are multiplied with another matrix termed ‘Value Matrix’, with 12,288 rows and 12,288 columns, which produces a ‘Value Vector’. The value vector is added to the embedding of the other vector (both are of smae dimensions) to get the change in embedding, reflecting its contextual meaning. Likewise, in this example, the embedding of token ‘fluffy’ is multiplied with value matrix to get its value vwctor, which is then added to the embedding of creature to get the embedding for ‘fluffy creature’. However, this is just a part of a large process.
+
+![Fig. 32](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_16-28-45.png)
+
+Fig. 32
+
+- Like we had in attention head, we now replace all query vectors with their corresponding embeddings and the key vectors with corresponding value vectors. We multiplythe value vectors with the probability distribution under the column of each embedding and take a column-wise sum. This sum gives the change in each embedding that should be made, to reflect its current contextual menaing. Alling this change to each embedding, we get new embeddings, and this is the change in embeding which was being referred to, since beginning of the topic.
+    
+    ![Change in embedding for attaining the meaning of a ‘fluffy blue creature’](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_16-43-45.png)
+    
+    Change in embedding for attaining the meaning of a ‘fluffy blue creature’
+    
+
+![Fig. 33](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_16-44-01.png)
+
+Fig. 33
+
+- It is efficient, especially for running multiple attention heads in parallel, that the value of parameters in value matrix and the sum of the n umber of parameters in the key and query matrices is the same. Hence, the value matrix can be factored as a product of a 12,288*128 matrix (which maps the embedding to a smaller dimensional space) and a 128*12,288 matrix (which re-maps the embedding to a larger dimensional space). Here, we are using a ‘Low-Rank’ transformation here.
+
+## c. *Cross-Attention :-*
+
+- Cross-Attention involves perocessing 2 different types of data, like translation from one language to another, or transcripting speech (audio to text)
+
+![Screenshot from 2024-07-01 17-06-13.png](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_17-06-13.png)
+
+- Here, in attention pattern, the main difference is that Query vectors come from one type of data say one language, and key vectors, from other language. Also, there is no need of masking in this case, as words further in a sentence can also affect meaning of sentence, in context of previous words, in dfferent languages.
+
+## d. *Multi-Head Attention and 1 Attention block :-*
+
+- An attention block consists of 96 Attention heads, running in parallel and there are 96 attention blocks in GPT-3.
+- Each attention head has its own query, key and value matrices and each head produces some change in embedding.
+
+![Screenshot from 2024-07-01 17-10-44.png](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_17-10-44.png)
+
+- At the end of an attention block, the changes in each embeddings produced by each head of attention are added to the original embedding to produce a new embedding and then, that new embedding is passed onto next attention block.
+
+![Screenshot from 2024-07-01 17-10-52.png](Neural%20Networks%20182a99e3c172458bac92a1430a6cff2e/Screenshot_from_2024-07-01_17-10-52.png)
+
+## e. *Output Matrix :-*
+
+- In the actual practice, to ease calculations, in each of the heads of attention, only the value matrix which has dimensions of 128*12,288 (which we refer to as ‘Value Down Matrix’) is used.
+- For each embedding, we get a 28 dimensional column vector. At the end of each attention block, all of these (for each embedding individually)they are combined to form a matrix having dimensions 96*128.
+- This 96*128 dimensional vector is then multiplied with the output matrix, which is formed by combining all the components of value matrix which have dimensions 12,288*128. Hence, when referring to a sinlge head, what is being referred is the ‘Value  Down Matrix’.
+
+## f. *Multilayer Perceptron :-*
+
+- After passing through an attention block, the embeddings go through a multilayer perceptron, and then this process is repeated.
+- Thus, eventually, the embeddings go through a series of attention blocks and then multilayer perceptrons.
+- The mre the embeddings get refined, the more the transformer is able to gauge finer details like the sentiment and tone in the gven sentence.
