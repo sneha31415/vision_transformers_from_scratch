@@ -4,7 +4,7 @@
 
 A **neural network** is a computational model which consists of **interconnected layers of nodes** (neurons) that can learn to perform tasks by adjusting some **parameters (weights and biases in this case)** connecting them together.
 
-e.g. A basic form of this is a **Linear Regression** model which aims to find the line of best fit for the data which it is given, so the parameters here are the **slope and the y-intercept** of the [line.IN](http://line.IN) this model there is only one input layer and one output layer.
+e.g. A basic form of this is a **Linear Regression** model which aims to find the line of best fit for the data which it is given, so the parameters here are the **slope and the y-intercept** of the line, In this model there is only one input layer and one output layer.
 
 Convolutional Neural Network(CNN) → Good of image recognition
 
@@ -169,3 +169,147 @@ Still this is one component of the gradient vector, as it takes for all weights 
 ![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2019.png)
 
 Now we can apply the same chain rule idea to layers before that.
+
+---
+
+## Chapter 5: Intro to Transformers
+
+Specific kind of neural network mostly used for voice to text, text to voice, text to image and language translation.
+
+GPT - Generative Pre-Trained Transformer
+
+It takes some text, image, voice and predicts what comes next.
+
+It first takes some snippet of text then appends the word predicted and passes on that snippet again.
+
+It predicts the next work as a form of probability distribution.
+
+So this is what a Vision Transformer would do,
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2020.png)
+
+Here the tunable parameters are simply the weights and biases.
+
+### Tokenization:
+
+The first step in a transformer is to break the input/prompt into small pieces called tokens.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2021.png)
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2022.png)
+
+Then each token is assigned a vector (matrix) of a very high dimension which encodes the meaning the word without context.
+
+In this video, we take example of the GPT-3 model,
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2023.png)
+
+These are all the types of matrices used in this model or just a standard transformer model, 
+
+### Embedding Matrix:
+
+It is a matrix of all pre-defined words in the language with each being assigned its particular vector.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2024.png)
+
+Each column is for a word, and the values are generated at random at first but then tuned using data.
+
+Each token in our input is assigned a vector based on this embedding matrix, it can be considered that each direction in this embedded vector refers to some context like age, number,location, gender etc.
+
+If we take a 3d slice of the high dimensional vector we can represent the words like this:
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2025.png)
+
+Words with meanings close to each other are closer to each other,
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2026.png)
+
+And this signifies the sense of direction in this huge matrix somewhat,
+
+Here to know how close the words are we can simply do the dot product.
+
+This vectors assigned to the tokens also contain their positional embeddings.
+
+Initially when the tokens are assigned the vectors from the embedding matrx it only consists of their meaning individually without any context of its surroundings.
+
+The model makes multiple repetitions of Attention and MLP blocks which will be explained later.
+
+Basically they add some more context in the vectors about each other.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2027.png)
+
+In the final Matrix after all these repetitions the last column( the last token) get updated for the particular context.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2028.png)
+
+A dot product of this last column in taken with an Unembedding matrix with all the 50k words, so this gives us how close is a word to some other word.
+
+So to convert the last output matrix into a probability distribution we use ***softmax.***
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2029.png)
+
+### Softmax with Temperature:
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2030.png)
+
+The input to this softmax is also called **Logits.**
+
+---
+
+## Chapter 6: Attention in transformers
+
+We consider tokens to be just full words for learning purposes but in reality they can also be parts of words, depending on the model.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2031.png)
+
+The Attention Mechanism adds context in all the vectors for the word mole. Initially the token embedding has no context.
+
+This attention process can be considered like asking questions like are there any adjectives beside a word, so for that a **Query** matrix in generated for a token,
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2032.png)
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2033.png)
+
+For now we suppose that this query matrix also transforms the 12288 dimensional embedding space to 128-dimensional query/key space.
+
+There is also another matrix similar to the query, a **Key** matrix, we can consider it supposedly like answering the query matrix. we also multiply this matrix to out embedded token.
+
+Now we arrange the outputs of this, in a table for the Keys and Querys and their corresponding dot products.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2034.png)
+
+This dot products give us the score by which some word enhances the meaning of the other word,
+
+We also apply softmax to normalize the values.
+
+But also the later words should not influence earlier words since the model simultaneously also predict what would come after each word so that one training example can act as many.
+
+So before applying softmax to the columns, we change the values below the diagonal to negative infinity, after 
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2035.png)
+
+This is called Masking. 
+
+Now fox example we want the word “fluffy” to make changes to “creature”, we use a third matrix called the Value Matrix,
+
+we multiply this values matrix to the word fluffy and add the output to creature.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2036.png)
+
+Now in place of the Key matrix we multiply the embeddings to the Value matrix, and then multiply the value vector to each column.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2037.png)
+
+now after adding the rescaled values we get the change in embedding for “creature” vector.
+
+This is also done for all the other words not just for “creature”.
+
+This step is called **Self-Attention Head.**
+
+**Cross Attention Head:** Key and Query act on two different data, for example, language translation, query would in english but key would be in some other language.
+
+Full attention block consists of multiple heads of attention where all have their own Key, Query and Value maps, These all head get some other type of context and change the embeddings in that way.
+
+![Untitled](Deep%20Learning%20a528f30c4a7e4a59b61042c8642b13d1/Untitled%2038.png)
+
+the embedded token goes through multiple Attention blocks and MLP block to finally get all the context updated in the matrices
