@@ -16,7 +16,7 @@ from 3Blue1Brown
 
 - Vector is any arrow, originating from the origin (in most of the cases).
 1. **For a 2-D space :**
-- It is represented by a 2*1 column matrix, where the upper and lower elements represent the x and y co-ordinates of the head of the vector (tip of the vector).
+- It is represented by a unique 2*1 column matrix, where the upper and lower elements represent the x and y co-ordinates of the head of the vector (tip of the vector).
 1. **For a 3-D space :**
 - Every vector can be represented by a unique 3*1 matrix, where the top, middle and bottom elements of the matrix represent the x, y and z co-ordinates of the vector.
 1. **Basic Vector Operations :**
@@ -26,11 +26,17 @@ If we have 2 vectors, and we move second vector such that its tail coincides wit
 
 This is because, comsider, for (**v** + **w**), we will first move along vector **v**, then, starting from head of **v**, we will move in the direction of **w**, according to the length of **w**. This would be equivalent to the addition of the 2 vectors.
 
-![Screenshot from 2024-06-29 12-25-15.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-25-15.png)
+![2 vectors](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-25-15.png)
 
-![Screenshot from 2024-06-29 12-24-44.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-24-44.png)
+2 vectors
 
-![Screenshot from 2024-06-29 12-28-22.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-28-22.png)
+![Addition of 2 vectors](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-24-44.png)
+
+Addition of 2 vectors
+
+![Formula for addition of 2 vectors](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-28-22.png)
+
+Formula for addition of 2 vectors
 
 - *Vector Multiplication (Scalar Multiplication)*
 
@@ -38,14 +44,16 @@ When a vector is multiplied by a scalar, each of its components (x component, y 
 
 Such numbers are termed ‘scalars’. If scalar is negative, the vector gets scaled, but in opposite direction.
 
-![Screenshot from 2024-06-29 12-34-32.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-34-32.png)
+![Scalar multiplication of a vector](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_12-34-32.png)
+
+Scalar multiplication of a vector
 
 # 2.  Basis vectors, Linear Combination of Vectors and Span :-
 
 ### a. *Basis :-*
 
-- In x-y plane, there are 2 unit vectors along positive directions of x and y axes, which are known as ‘i hat’ or ‘ i cap’ and ‘j hat’ or ‘j cap’ respectively. (Fig. 1)
-- Technically, we can say that ‘*the basis of a vector space ois a set of linearaly independent vectors that span the full space*’.
+- In x-y plane, there are 2 unit vectors along positive directions of x and y axes, which are known as ‘**i hat**’ or ‘**i cap’** and ‘**j hat’** or ‘**j cap**’ respectively.
+- Technically, we can say that ‘T*he basis vector(s) of a vector space is(are) a set of linearaly independent vector(s) that span the full space*’.
 
 ### b. *Linear Combination of Vectors :-*
 
@@ -63,7 +71,7 @@ Fig. 3
 ### d. *Vectors v/s Points :-*
 
 - A point in a vector space is the position of the head of the coreresponding vector in that space.
-- When dealing with collection of vectors, it is convinient to dela with them as points; but when individual vectors are considered, considering them as vectors is convinient.
+- When dealing with collection of vectors, it is convinient to deal with them as points; but when individual vectors are considered, considering them as vectors is convenient.
 
 ### e. *Linearly Dependent Vectors :-*
 
@@ -74,10 +82,10 @@ Fig. 3
 
 - A ‘Linear Transformation’ is like a function, which takes vector(s) as input and give another vectror(s) as output. It kind of moves the input vector to the position of the output vector; that’s why it is called as ‘transformation’ rather than a function.
 - Unless mentioned, in these notes, we consider linear transformations only.
-- For a transformation to be linear, there are 2 requirements :
-1. All lines must remain lines (hence grid lines are even and parallely spaced).
-2. Origin must be fixed at its place before and after transformation.
-- Depending on where the i hat and j hat vectors land after transformation, we can find transformation of any vector in the space as :
+- For a transformation to be linear, there are 2 basic requirements :
+    1. All lines must remain lines (hence grid lines are evenly spaced and parallel).
+    2. Origin must be fixed at its place before and after transformation.
+- Depending on where the **i hat** and **j hat** vectors land after transformation, we can find transformation of any vector in the space as :
 
 Transformed **v** = (scalar_1)(Transformed **i hat**) + (scalar_2)(Transformed **j hat**) 
 
@@ -87,7 +95,7 @@ Transformed **v** = (scalar_1)(Transformed **i hat**) + (scalar_2)(Transformed *
 
 Fig. 4
 
-- The transformed **i hat** and **j hat** vectros can be written in the form of a 2*2 matrix. then, if we have the co-ordinates of any point in the untransformed space, we can find its co-ordinates in the transformed space by mulilpying the columns of this 2*2 matrix with the matrix of original co-ordinates of the point and add them.
+- The transformed **i hat** and **j hat** vectors can be written in the form of a 2*2 matrix. then, if we have the co-ordinates of any point in the untransformed space, we can find its co-ordinates in the transformed space by multipying the columns of this 2*2 matrix with the matrix of original co-ordinates of the point and add them.
 - this ida can be extended to define matrix vector multiplication as :
 
 ![Fig. 5](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-29_14-14-33.png)
@@ -105,7 +113,7 @@ Fig. 6
 
 ## a. *Intuitive approach :-*
 
-- A ‘composition’ of a transformation refers to the action of two or more transformations, either one after the other or all of them acting simultaneously.
+- A ‘composition’ of a transformation refers to the action of two or more transformations, either one after the other or all of them acting simultaneously, described in a simngle transformation/matrix.
 - Consider a composition of 2 transformations - a 90 degrees anticlockwise rotation and a shear transformation. We can form individual matrices for the individual transformations and matrix for composition of the transformations as :
 
 ![Fig. 7](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_11-09-09.png)
@@ -184,14 +192,15 @@ Fig. 16
 
 Fig. 17
 
-- For an irregular shaped object, its area can be approximated to the sum of areas of a good number of small squares.
+- For an irregular shaped object, its area can be approximated to the sum of areas of a number of small squares.
 
 ![Fig. 18](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_12-12-43.png)
 
 Fig. 18
 
 - If the determinant of a matrix (transformation) is zero, it means that the area in the original space is reduced to a line or even a point.
-- If the determinant of a matrix is zero, it means that the orientation of the 2-D space is, in some aspect, flipped over, like flipped from right to left or from top to bottom (w.r.t the positions of the basis vecrtors).
+- If the determinant of a matrix is negative, it means that the orientation of the 2-D space is, in some aspect, flipped over, like flipped from right to left or from top to bottom (w.r.t the positions of the basis vecrtors).
+- In this case, if determinant is zero, then the transformation transforms the space to a line or a point, all of which have zero area. In this case, it is evident that the column vectors in the matrix are linearly dependent.
 - In case of 3-D space, the determinant gives information of the change in volume of a unit cube, having its edges resting on the basis vectors, after it gets warped into some kind of ‘parallelepiped’.
 
 ![Fig. 19](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_12-51-05.png)
@@ -221,7 +230,7 @@ Fig. 22
 
 A set of equations having variables raised only to power 1 and sum of their scaled versions being equated to a constant. They can be represented in Matrix form.
 
-- This is equivalent to applying a transformation ‘A’ to vector ‘**x**’ in 3-D space, so that it aligns with ‘**v**’.
+- This is equivalent to applying a transformation ‘A’ to vector ‘**x**’ in 3-D space, so that it aligns with ‘**v**’. Value of **x** is unknown and is to be found out.
 
 ![Fig. 23](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_14-42-22.png)
 
@@ -233,10 +242,10 @@ Fig. 24
 
 - We consider 2 cases while solving such a problem :-
 1. **det(A)≠0 :-**
-- We try to trace the vector **v** from the transformed space to the original space, so that it will now coincide with x and thus, value of **x** acn be computed. This type of transformation, where we go from space transformed by A to the original, untransformed space, is termed as ‘Inverse Transformation’ or ‘Inverse Matrix’, denoted as ‘A^-1’.
+- We try to trace the vector **v** from the transformed space to the original space, so that it will now coincide with x and thus, value of **x** can be computed. This type of transformation, where we go from space transformed by A to the original, untransformed space, is termed as ‘Inverse Transformation’ or ‘Inverse Matrix’, denoted as ‘A^-1’.
 - This implies that the operation of multiplying A^-1 with A doesn’t affect the original space; hence, such transformation is termed ‘Identity Transformation’ and is characterized by a zero matrix, having 1  as the diagonal elements.
 - Then, we pre-multiply this inverse on both sides of the equation in Fig. 24, and calculate value of **x** as shown in Fig. 25 and 26.
-- likewise, if the number of unknowns and number of equations is the same, then they, most probably have one unique solution.
+- Likewise, if the number of unknowns and number of equations is the same, then they, most probably have one unique solution.
 
 ![Fig. 25](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_14-55-19.png)
 
@@ -287,9 +296,9 @@ Fig. 29
 
 - Dot Prodcut is a commutative operation.
 - For 2 vectors of same dimensions, dot product is equivalent to the sum of the product of corresponding elements of the 2 vectors.
-- Technically, ‘Dot Product’ can be defined as the product of length of one vector with the length of he projection of the other vector on the previous vector.
-- Consider a vector **v**=4**i**+3**j** . If there is a transformation, which transforms the 2-D space to a 1-D space (Number Line), then we would have a 182 matrix for that transformation. Multiplying this transfromation with the column vector of **v** in 2-D space, we get its co-ordinate in 1-D space. This looks very analogous to the operation we perfrom during dot product.
-- This also highlights the connection between 1*2 transformation matrices and vectors in 2-D space, as we can go from one entity to othher by rotating the vector.
+- Technically, ‘Dot Product’ can be defined as the product of length of one vector with the length of the projection of the other vector on the previous vector.
+- Consider a vector **v**=4**i**+3**j** . If there is a transformation, which transforms the 2-D space to a 1-D space (Number Line), then we would have a 1*2 matrix for that transformation. Multiplying this transfromation with the column vector of **v** in 2-D space, we get its co-ordinate in 1-D space. This looks very analogous to the operation we perfrom during dot product.
+- This also highlights the connection between 1*2 transformation matrices and vectors in 2-D space, as we can go from one entity to other by rotating the vector.
 
 ![Fig. 30](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_16-09-04.png)
 
@@ -297,7 +306,7 @@ Fig. 30
 
 - Example :-
 
-Consider a 1-D space placed diagonally on the 2-D space. Let **u** be a unit vector of the 1-D space. We also braw the basis vectors of the 2-D space. On the basis of symmetry, we can infer that the transformation would be ; [ux uy], where ux and uy are respectively the x and y components of the co-ordinates of **u** w.r.t the 2-D space.
+Consider a 1-D space placed diagonally on the 2-D space. Let **u** be a unit vector of the 1-D space. We also draw the basis vectors of the 2-D space. On the basis of symmetry, we can infer that the transformation would be ; [ux uy], where ux and uy are respectively the x and y components of the co-ordinates of **u** w.r.t the 2-D space.
 
 ![Fig. 31](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_16-17-03.png)
 
@@ -323,8 +332,8 @@ Thus, dot product of a vector with other is same as applying transformation of t
 
 ## b. *Duality :-*
 
-- ‘Duality’ refers to the similarity/correspondence between 2 types of  mathematical things.
-- In this case, we can say that ‘Dual of a vector (in 2-D space) is the linear transforamtion (2-D space to 1-D space) and vice versa.
+- ‘Duality’ refers to the similarity/correspondence between 2 types of mathematical things.
+- In this case, we can say that ‘Dual of a vector (in 2-D space) is a linear transforamtion (2-D space to 1-D space) and vice versa.
 
 # 10. Cross Products :-
 
@@ -334,7 +343,7 @@ Thus, dot product of a vector with other is same as applying transformation of t
 
 Fig. 35
 
-- If **v** lies to the right of **w**, then the cross product is positve; if **v** lies on left of **w**, corss product is negative. This is with reference to the relative position of the basis vectors.
+- If **v** lies to the right of **w**, then the cross product is positive; if **v** lies on left of **w**, corss product is negative. This is with reference to the relative position of the basis vectors.
 - Hence, we have the result :
 
 ![Fig. 36](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_16-47-12.png)
@@ -353,8 +362,8 @@ Fig. 37
 
 Fig. 38
 
-- The result of a cross product is a vector whose magnitude is equal to rea of the parallelogram formed by the 2 vectors and its direction is given by the right hand thumb rule, with index finger and the middle finger pointing in the directions of the first and second vector respectively and thumb giving the direction of the resultant vector.
-- Methods of calculating cross product :
+- The result of a cross product is a vector whose magnitude is equal to area of the parallelogram formed by the 2 vectors and its direction is given by the right hand thumb rule, with index finger and the middle finger pointing in the directions of the first and second vector respectively and thumb giving the direction of the resultant vector.
+- Methods of calculating cross product; here, in R.H.S. matrix, the first, second and third columns, specify the scalars of **i hat**, **j hat** and **k hat** vectors (3-D space).
 
 ![Fig. 39](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-06-30_22-11-40.png)
 
@@ -364,7 +373,7 @@ Fig. 39
 
 ## a. *Computational Method :-*
 
-- The vector which describes some kind of linear transformation to a number line is termed as ‘Dual Vector’.
+- The vector which can also describe some kind of linear transformation to a number line is termed as ‘Dual Vector’.
 - We consider 2 vectors, **v** and **w**, and a variable vector, defined by its x, y and z co-ordinates. We then consider a function, which is linear, which takes in the variable input from 3-D space and maps it to a 1-D Number line.
 
 ![Fig. 40](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_18-34-44.png)
@@ -389,6 +398,8 @@ Fig. 42
 
 Fig. 43
 
+- As the L.H.S. indiactes the components of vector **p**, hence, we get x=**i hat**, y=**j hat** amd z=**k hat**.
+
 ![Fig. 44](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_18-40-23.png)
 
 Fig. 44
@@ -396,7 +407,9 @@ Fig. 44
 ## b. *Geometric Interpretetion :-*
 
 - The volume of parallelpiped formed by vectors **p**, **v** and **w** is given on the R.H.S. of the equation in Fig. 42. and it is equal to the area of the base of the parallelpiped (**v** x **w**) times the height of parallelpiped.
-- The height of parallelpiped is equal to the component of p in the direction perpendicular to (**v** x **w**) which is equal to the dot product of **p** with vector (x**i**+y**j**+z**k**) ****
+- Height of parallelepiped can be given by the component of vector **t**=x**i**+y**j**+z**k.**
+- Hence, volume of parallelpiped is same as dot product : **p.t** i.e. L.H.S., which is just product of component of **t** in direction of p and length of **p;** here area is length of **p**.
+- This can be satisfied only when x=**i hat**, y=**j hat** amd z=**k hat.**
 
 # 12. Cramer’s Rule - Geometric Interpretation :-
 
@@ -440,8 +453,8 @@ Fig. 50
 
 Fig. 51
 
-- We consider the ‘mystery vector’ or let it be **s**. In the untransformed space, referring to Fig. 51, we consider a parallelogram formed by vectors **j hat** and **s**. Its area would thus be ‘x’ (x co-ordinate of **s**).
-- Likewise, we can consider a parallelogram formed with **i hat** and **s**, whose area would be y (y co-ordinate of **s**).
+- We consider the ‘mystery vector’ or let it be **s**. In the untransformed space, referring to Fig. 50, we consider a parallelogram formed by vectors **j hat** and **s**. Its area would thus be ‘x’ (x co-ordinate of **s**).
+- Likewise, we can consider a parallelogram formed with **i hat** and **s**, whose area would be y (y co-ordinate of **s**) (Fig. 50)
 - The areas are signed, in the sense that they can also be negative, and are considered with their sign.
 - After applying the transformation, the vectors change their positions. Consider untransformed space of Fig. 50. After transformation, Fig. 50 would look like :
 
@@ -456,7 +469,7 @@ Fig. 52
     x=Area/det(A)
     
 
-Now, for the parallelogram whose area is to be considered, the y co-ordinate changes to the value of first column of the transformation (as initially it was considered along **j hat** so unit length). But, x co-ordinate of **s** was related to its original p[osition, which now changed to [4 2]. Hence, in the area matrix we substitute [4 2] as its first column; else, the matrix is same as that of A.
+Now, for the parallelogram whose area is to be considered, the y co-ordinate changes to the value of second column of the transformation (as initially it was considered along **j hat** so unit length). But, x co-ordinate of **s** was related to its original p[osition, which now changed to [4 2]. Hence, in the area matrix we substitute [4 2] as its first column; else, the matrix is same as that of A.
 
 - Likewise y co-ordinate can be calculated.
 
@@ -474,7 +487,7 @@ Fig. 54
 
 Fig. 55
 
-- A simular process can be done for 3-D space, just that now, we will be dealing with a parallelpiped. Any of the above 3 cases can be considered as starting point.
+- A similar process can be done for 3-D space, just that now, we will be dealing with a parallelepiped. Any of the above 3 cases can be considered as starting point.
 - For instance, consider the following example :-
 
 ![Fig. 56](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_21-46-28.png)
@@ -496,9 +509,9 @@ Fig. 57
 2. How first co-ordinate is x co-ordinate and indicates sideward motion
 3. How second co-ordinate is y co-ordinate and indicates vertical motion
 - Space itself has no grid so anyone can set any kind of co-ordinate system according to their convenience.
-- Consider a new co-ordinate system, where the basis vectors i hat and j hat are changed to [2 1] and [-1 1] respectively. Arranging them respectively column-wise, we get the matrix that corresponds to the transformation of current space to that of new co-ordinate system.
-- Hence, if we multiply any co-ordinates of new system with this transformation, we will get corresponding co-ordinates of the same vector in our co-ordinate system. this transformation/matrix will now be termed as ‘Change of Basis Matrix’.
-- Likewise, if we multiply co-ordinates from original system with the inverse matrix of this transformation, we will get the co-ordinates according to the new system.
+- Consider a new co-ordinate system, where the basis vectors **i hat** and **j hat** are changed to [2 1] and [-1 1] respectively. Arranging them respectively column-wise, we get the matrix that corresponds to the transformation of current space to that of new co-ordinate system.
+- Hence, if we multiply any co-ordinates of new co-ordinate system with this transformation, we will get corresponding co-ordinates of the same vector in our co-ordinate system. this transformation/matrix will now be termed as ‘Change of Basis Matrix’.
+- Likewise, if we multiply co-ordinates from original system with the inverse matrix of this transformation, we will get the co-ordinates according to the new  co-ordinatesystem.
 
 ## b. *Translation of matrices among co-ordinate systems :-*
 
@@ -526,7 +539,7 @@ Fig. 60
 
 Fig. 61
 
-- Whenever an equation of a form as shown below is observed, we can ingfer that middle matrix denotes transformation of some kind and outer matrices, translation of some kind 9like from one co-ordinate system to another).
+- Whenever an equation of a form as shown below is observed, we can infer that middle matrix denotes transformation of some kind and outer matrices, translation of some kind (like from one co-ordinate system to another).
 
 ![Fig. 62](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_22-45-53.png)
 
@@ -536,7 +549,7 @@ Fig. 62
 
 - Generally, after a transformation, vectors get deviated fom their own original spans. However, sometimes the vectors do maintain their original span even after ttansformation. Such vectors are termed as ‘Eigenvectors’.
 - The factor by which an eigenvector or eigenvalue is stretched or squished during its transformation, is termd as its ‘eigenvalue’. A negative eigenvalue suggests that the vector gets flipped after the transformation.
-- For example, if we find an eigenvector for somekind of 3-D rotation, then wecan infer that the eigenvector is the axis of rotation and its eigenvalue is 1 (as rotation doesn’t stretch or squish vectors).
+- For example, if we find an eigenvector for somekind of 3-D rotation, then we can infer that the eigenvector is the axis of rotation and its eigenvalue is 1 (as rotation doesn’t stretch or squish vectors).
 - Hence, we get the relation :
 
 ![Fig. 63](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_22-58-40.png)
@@ -549,7 +562,7 @@ Fig. 63
 
 Fig. 64
 
-- Hence now for a non-zero solution, i.e. if v≠0, we need :
+- Hence now for a non-zero solution, i.e. if **v**≠0, we need :
 
 ![Fig. 65](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-02-52.png)
 
@@ -557,9 +570,11 @@ Fig. 65
 
 - Consider another example, where the eigenvalues are 2 and 3. We can compute the eigenvectors by substituting the values of eigenvalues one by one in equation given in Fig. 64.
 
-![Screenshot from 2024-07-01 23-06-35.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-06-35.png)
+![Fig. 66](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-06-35.png)
 
-- Non-real solution for lambda indicate absence of eigenvalues and thus, eigenvectors. Also, eigenvalues, whichare complex numbers, correspond to some kind of rotation.
+Fig. 66
+
+- Non-real solution for lambda can indicate absence of eigenvalues and thus, eigenvectors. Also, eigenvalues, which are complex numbers, correspond to some kind of rotation.
 - We can also have just one eigenvalue but multiple eigenvectors e.g. transformation in which co-ordiante system is scaled up/down.
 - A ‘Diagnal Matrix’ is a special kind of matrix, whose digonal elemnts are non-zero and are eigen values for corresponding basis vectors.
 
@@ -567,11 +582,15 @@ Fig. 65
 
 - The equation, whose roots are the eigenvalues, is termed as the ‘characteristic polynomial’.
 
-![Screenshot from 2024-07-01 23-21-47.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-21-47.png)
+![Fig. 67](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-21-47.png)
+
+Fig. 67
 
 - Important results :-
 
-![Screenshot from 2024-07-01 23-25-23.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-25-23.png)
+![Fig. 68](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-25-23.png)
+
+Fig. 68
 
 # 16. Abstract Vector Spaces :-
 
@@ -579,22 +598,32 @@ Fig. 65
 - Functions can also have transformations, which transform the function from one form to another form. Example - derivative; generally, such transoprmations are termed as ‘operators’.
 - Properties of a linear transformation :- (Linear transformations preserve addition and scalar multiplication).
 
-![Screenshot from 2024-07-01 23-40-09.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-40-09.png)
+![Fig. 69](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-40-09.png)
+
+Fig. 69
 
 - It can be observed that the above properties are equally valid for operators like the derivative.
 - Consider a space of a function, for instance, polynomial functions. there can be infinitely many polynomials in this space, but each polynomial will have finite number of terms. We choose increasing powers of x, as the basis vectors of this space, just like **i hat**,  **j hat** and **k hat** in 3-D space. This space is infinitely dimensional.
 
-![Screenshot from 2024-07-01 23-44-40.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-44-40.png)
+![Fig. 70](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-44-40.png)
 
-- We take the derivative of each basis vector term and substitute them, colum-wise, in the derivative matrix. Multiplying this matrix witha any vector, we can get derivative of the polynomial represented by that vector.
+Fig. 70
+
+- We take the derivative of each basis vector term and substitute them, column-wise, in the derivative matrix. Multiplying this matrix with any vector, we can get derivative of the polynomial represented by that vector.
 - Thus, there are several similarities between functions and linear algebra concepts.
 
-![Screenshot from 2024-07-01 23-51-41.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-51-41.png)
+![Fig. 71](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-51-41.png)
+
+Fig. 71
 
 - Hence, several kinds of vector spaces can be defined, like one with arows, one with matrices, one with functions, etc. Linear Algebra concepts are applicable in all of them in a similar manner.
 
-![Screenshot from 2024-07-01 23-53-18.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-53-18.png)
+![Fig. 72](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-53-18.png)
 
-- Axioms for various vector spaces (They are like interface between discovered theories and theories yet to be discovered):-
+Fig. 72
 
-![Screenshot from 2024-07-01 23-54-49.png](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-54-49.png)
+- Axioms for various vector spaces (They are like interface between discovered theories and theories yet to be discovered, or checklist for new theories):-
+
+![Fig. 73](Linear%20Algebra%207b2ecec57ba24509bdd0f099c8067e7b/Screenshot_from_2024-07-01_23-54-49.png)
+
+Fig. 73
