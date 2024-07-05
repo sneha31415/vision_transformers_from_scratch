@@ -112,13 +112,16 @@ Similarly, for y = 0, y hat must be small, and the minimum it can become is zero
 
 - **loss function is applied to a single training example**
 
-The cost function is the average of the loss function of the **entire training set**. We have to find the parameters 𝑤 𝑎𝑛𝑑 𝑏 that minimize the overall cost function.
+The cost function is the average of the loss function of the **entire training set**. We are going to find the parameters 𝑤 𝑎𝑛𝑑 𝑏 that minimize the overall cost function.
 
 The loss function measures how well the model is doing on the single training example, whereas the cost function measures how well the parameters w and b are doing on the entire training set.
 
 **Gradient Descent**
 
 The goal of the training model is to minimize the loss function, usually with randomly initialized parameters, and using a gradient descent method .
+
+1. Start calculating the cost and gradient for the given training set of (x,y) with the parameters w and b.
+2. update parameters w and b. Repeat these steps until you reach the minimal values of cost function.
 
 Derivative = slope of function at that point(dJ / dW)
 
@@ -141,9 +144,13 @@ Slope can be different at diff points of the curve
 
 **Computation Graph**
 
+A nice illustration by [colah's blog](https://colah.github.io/posts/2015-08-Backprop/) can help better understand.
+
 ![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2014.png)
 
 **Derivatives with a Computation Graph**
+
+If one wants to understand derivatives in a computational graph, the key is to understand derivatives on the edges. If a directly affects c, then we want to know how it affects c. If a changes a little bit, how does c change? We call this the partial derivative of c with respect to a.
 
 ![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2015.png)
 
@@ -152,3 +159,74 @@ Slope can be different at diff points of the curve
 Logistic regression gradient descent computation using the computation 
 
 ![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2016.png)
+
+The bottom-rightmost equation means that if on increasing W1, loss(L) increases(this total is denoted by {delL/delW1} or dW1) then dw1 will be positive so as per W1 = W1 - alpha dW1, we should decrease W1 because that would decrease loss 
+
+**Gradient Descent on m Examples**
+
+The cost function is computed as an average of the `m` individual loss values, the gradient with respect to each parameter should also be calculated as the mean of the `m` gradient values on each example.
+
+This is the calculation for m examples, refer with the above calculation of one example to understand nicely
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2017.png)
+
+```
+j = j / m
+dw = dw / m
+db = db / m
+since j, dw, db were over m examples, we need to average it
+```
+
+But this is less efficient due to for loops needed for each feature 
+
+We will thus use vectorization to get rid of for loops
+
+## vectorization:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2018.png)
+
+how vectorization speeds up code:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2019.png)
+
+np.random.rand(n) generates a list of n numbers each between 0 to 1
+np.dot(a,b) computes the dot product of a and b
+
+GPUs are faster due to parallelization but than can be done is CPUs using python inbuilt functions like numpy
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2020.png)
+
+### More examples
+
+example1:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2021.png)
+
+example2:
+
+always try to see if you can use numpy instead of for loop
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2022.png)
+
+learnings applied our logistic regression gradient descent implementation
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2023.png)
+
+instead of taking dW1 , dW2 and so on all the examples seperately, we put them in an array and find the dot product.
+Here we removed one out of the two for loops
+
+### more vectorization
+
+Z contains all the smallcase z
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2024.png)
+
+similarly:
+
+[https://www.notion.so](https://www.notion.so)
+
+wT is a 1*m matrix, X is n*m(where n is the number of input variables) 
+
+so their dot product is an 1*m matrix which contains all the small z
+
+Summary: Instead of looping for each training example to compute lowercase a and z one at a time, we computed A, Z which computed all a and z at the same time
