@@ -106,6 +106,8 @@ Justification for loss function:
 
 ![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2011.png)
 
+### log is to the base e and not 10
+
 when y = 1, for our loss func to be small, negative of log (y hat) must be small, thus log (y hat) must be large , thus y hat must be large, but y hat comes after applying sigmoid function so y hat must be 1 for the loss to be minimum
 
 Similarly, for y = 0, y hat must be small, and the minimum it can become is zero
@@ -230,3 +232,144 @@ wT is a 1*m matrix, X is n*m(where n is the number of input variables)
 so their dot product is an 1*m matrix which contains all the small z
 
 Summary: Instead of looping for each training example to compute lowercase a and z one at a time, we computed A, Z which computed all a and z at the same time
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2025.png)
+
+the left one is the one with 1 for loop and the right one is with numpy(got rid of for loop )
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2026.png)
+
+one for loop eliminated
+
+## Broadcasting in python
+
+### Broadcasting can happen only and only if:
+
+1. they are equal, or
+2. one of them is 1.
+
+eg. 
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2027.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2028.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2029.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2030.png)
+
+axis = 0 means sum verticaly
+
+axis = 0 means sum horizontally
+reshape commands shapes the matrix to 1*4. Here this command is redundant. But when we aren’t sure of the size, we call reshape on the matrix  to make it to the size we need it to be. It is a cheap command so can be called to be sure with the size
+
+matrix + some number → python expands the number into a matrix of the same size
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2031.png)
+
+The above is also true for [1 2 3 4] i.e a column matrix
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2032.png)
+
+In the above example, [100 200 300] is duplicated m-1 times
+
+similarly
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2033.png)
+
+### note:: broadcasting also takes place for multiplication and division
+
+a*b is multiplication not dot product
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2034.png)
+
+ans = 3*3
+
+- Note on python/ Numpy Vectors
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2035.png)
+
+a = np.random.randn(5)
+
+creates a rank 1 array with shape (5, )
+
+In neural network problems do not use a rank 1 array 
+
+![Screenshot from 2024-07-06 18-41-34.png](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Screenshot_from_2024-07-06_18-41-34.png)
+
+np.random.randn(5, 1) creates a definite column matrix 
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2036.png)
+
+if you end up with a rank 1 array then do a = a.reshape(5,1) or (1,5) as per need
+
+use assert function to check the dimension it is a cheap function
+
+**Explanation of Logistic Regression Cost Function**
+
+[https://www.notion.so](https://www.notion.so)
+
+### some doubts cleared:
+
+Query : what is dz and why is db the sum of it
+
+In the context of neural networks and backpropagation, dZtypically represents the gradient of the loss function with respect to the linear component Z(which is Z=WX+bZ = WX + bZ=WX+b). This gradient, dZ, is computed during the backpropagation process.
+
+Here's a more detailed breakdown:
+
+1. **Forward Propagation**:
+    - Z=WX+b
+    - A=σ(Z)A = \σ(Z) (where σ is the activation function)
+        
+        σ\sigma
+        
+2. **Loss Computation**:
+    - L=$L$(A,Y)  (where $L$ is the loss function and Y is the true label
+3. **Backpropagation**:
+    - To update the parameters W and b, you need to compute the gradients of the loss with respect to these parameters.
+    - dZ=∂L/∂Z
+    - dW=∂L/∂W
+    - db=∂L/∂b
+
+The gradient db is the derivative of the loss with respect to the bias term b. During backpropagation, the gradient with respect to the bias term b is computed as the sum of all elements in dZ divided by the number of examples m. This is because the bias term b affects all the outputs in the same way, and hence the gradient needs to accumulate the contribution from all training examples.
+
+In mathematical terms, the derivative of the loss with respect to b is given by:
+
+db=∑dZi/m for i = 1 to m
+
+where m is the number of examples.
+
+### Example
+
+Here's a simple example to illustrate this:
+
+```python
+pythonCopy code
+import numpy as np
+
+# Suppose dZ is computed from the backpropagation step
+dZ = np.array([[1.0, -2.0], [3.0, -4.0]])  # Example gradient array
+m = dZ.shape[1]  # Number of examples, in this case, 2
+
+# Compute db
+db = np.sum(dZ) / m
+
+print(db)  # Output will be 0.5 in this case
+
+```
+
+In this example, `dZ` contains the gradients of the loss with respect to the linear component `Z` for each training example. Summing `dZ` and dividing by `m` gives the gradient with respect to the bias term `b`, which is necessary for updating `b` during gradient descent.
+
+REMEMBER
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2037.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2038.png)
+
+### ASSIGNMENT QUESTIONS:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2039.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2040.png)
+
+### Note : * indicates element wise multiplication
