@@ -122,3 +122,47 @@ We should refrain from using rank 1 arrays due to thier non-intuitive behaviour.
 # Week 3
 
 # Neural Networks Overview :-
+
+![Screenshot from 2024-07-07 16-48-33.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_16-48-33.png)
+
+Now, we just repeat what calculations we did for logistic regression mdel over several neurons. Such a group of stacked neurons is termed as ‘Layer’ and variable g of a layer 1 can be represented as g superscript [1]. g superscript (1) refers training example 1. We do calculations of z, a=y_hat in each layer, in each neuron and pass on the activations of all these neurons to those of the next layer. Derivatives, which are used in backpropagation, can also be represented in a fashion similar to that of variables as shown in red in above image.
+
+# Neural Networks Representation :-
+
+![Screenshot from 2024-07-07 16-58-46.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_16-58-46.png)
+
+The input layer is indexed as 0, and subsequent indexing is applied to layers. Neurons/Nodes are numberd as 1, 2, 3, …, starting from the top. While describing a neural network, the input layer isn’t taken into consideration; hence, above neural network can be said to be a ‘2 layer Neural Network’. The dataset that we feed in the neural network, contains labels for input layer and output layer, but not hidden layers. Likewise, we have specific matrices w and b for each layer (as we are implementing logistic regression). The activation matrix can be formed for each layer as a vector/Python Matrix as shown for the layer 1 in above image.
+
+# Computing a Neural Network’s output :-
+
+![Screenshot from 2024-07-07 17-29-54.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_17-29-54.png)
+
+Every neuron of the netwrok for our logistic regression model, performs these 2 operations - calculation of z and calculation of a (activation). If we consider each neuron individually (for layer 1 at present), we can form equations of ‘z’ and ‘a’ similar to those of our previous neural network’s model, by giving proper superscript and subscript according to layer index and neuron index respectively. Hence, we get matrices for w and b for first layer.
+
+![Screenshot from 2024-07-07 17-30-09.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_17-30-09.png)
+
+We can group the values of w, b and z, as well as those of a and sigmoid(z) together to form corresponding matrices. Hence, by using vectorization, we get : 
+
+z[1]=(W[1].T)(X)+b …(each term is a vector/matrix; W[1]=w[1].T)
+
+Extending the same idea to layer 2, we get final 4 equations for this Neural Network :
+
+![Screenshot from 2024-07-07 17-30-18.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_17-30-18.png)
+
+We can also represent X as ‘a’ superscript [0]
+
+# Vectorizing across multiple examples :-
+
+![Screenshot from 2024-07-07 20-11-38.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_20-11-38.png)
+
+We now take int consideration m examples in the X vector, as well as the neural network. Note, that capital letters denote vectorized version. We can dentoe any variable related to ith training data with superscript of round brackets with i. Non-vectorized version of this prblem suggests use of for loop from 1 to m. 
+
+![Screenshot from 2024-07-07 20-14-40.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_20-14-40.png)
+
+Now, in vectorizd versin we will just take into consideration that each matrix will now have m times as much columns as it previously had. Hence, ultimately we can get activation of each of the neuron, for each training example. Each matrix has as much rows as there are hidden units in previous layer and as much columns as there are total number of training examples.
+
+# Activation Functions :-
+
+![Screenshot from 2024-07-07 21-56-21.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_21-56-21.png)
+
+We have several options for activation functions. One of them is a=tanh(z). It can be thought of to be a version of the sigmoid function, but centred around zero. This characteristic makes it preferrable as we try to have a zero mean for our data. However, as z becomes very large or very small, the derivative of tanh(z) becomes very small, slowing down the gradient descent process. Sigmoid function is still preferrable for output layer, as it gives output between 0 and 1, which can be usefuk in the case of binary classification. Another example is ReLU - Rectified Linear Unit. It has the advantage that it has slope 1 for all positive values of z and slope 0 for all negative values. The slope at z=0 is not defined, however, in actual computations, the odds of attaining the point z=0.00000000 is very small, so thats not a thing of concern. ReLU is mostly used in practice, as the slope doesn’t cause the gradient process to slow down as z→0. There is another version of ReLU i.e. Leaky ReLU, which as a slight slope for ngative values of z. The parameter of 0.01 in Leaky ReLU can be changed in the process of ML.
