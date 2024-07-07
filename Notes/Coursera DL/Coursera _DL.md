@@ -100,3 +100,25 @@ Here w.T means transpose of w (as it is a column vector), X is the matrix of fea
 ![Screenshot from 2024-07-05 20-54-43.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-05_20-54-43.png)
 
 As shown in Fig., we initialize arrays for various values of z and y (expected output) to implement vectorization for dz. Then, according to the formula fr dz, using vectorization, we compute values of dw vector for all features and in the end, divide it by m. We observe that the computation of db is basically the average of the sum of elements of dz. We simplify it accordingly. As shown in Fig., we modify initial algorithm, implementing vectorization. However, we need to repeat this new algorithm for multiple iterations, which can be accommplished only using for loop.
+
+# Broadcasting in Python :-
+
+![Screenshot from 2024-07-06 13-41-38.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-06_13-41-38.png)
+
+![Screenshot from 2024-07-06 13-42-09.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-06_13-42-09.png)
+
+![Screenshot from 2024-07-06 13-43-48.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-06_13-43-48.png)
+
+As shown in the general principle of brodcasting, If we give a (m, n) dimensional matrix and do any arithmetic operation (addition. subtraction, multiplication. division), then Python Interpreter automatically converts the other array/vector : if row vector of dimension m, then that row vector is stacked horizontally n times; if column vector of dimension n, then that row vector is stacked vertically m times. Then, the operation is done m times. Several examples are considered for this; like summing all columns of a matrix of nutritional components - calories from carbs, protein and fat, per 100g of 3 food items, and then, dividing original matrix by this 1*4 column vector to get percentage of the calories provided by each nuitritional component in each food item.
+
+![Screenshot from 2024-07-06 13-48-54.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-06_13-48-54.png)
+
+# Note on Python/Numpy Vectors :-
+
+![Screenshot from 2024-07-06 13-59-46.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-06_13-59-46.png)
+
+We should refrain from using rank 1 arrays due to thier non-intuitive behaviour. We can always reshape rank 1 arrays or any vector as vectors/matrices of required size. We can use assert statements to ensure matrices/vectors of correct size.
+
+# Week 3
+
+# Neural Networks Overview :-
