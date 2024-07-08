@@ -373,3 +373,129 @@ REMEMBER
 ![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2040.png)
 
 ### Note : * indicates element wise multiplication
+
+assignment2
+
+Flattening and standarding:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2041.png)
+
+# WEEK : 3
+
+**() brackets will refer to the training example**
+
+**square [ ] brackets will refer to the layer of the neural network**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2042.png)
+
+like logistic regression only but multiple times z and a calculation
+
+**Neural Network Representation**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2043.png)
+
+**Computing a Neural Network's Output**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2044.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2045.png)
+
+for hidden layer, b is a 4*3 matrix and for output layer, 1*4 matrix. Same for W
+
+Also note that W = wT where wT is the transpose of w
+
+So, for given input x of the neural network we can compute the output of the neural network with the given 4 lines of code
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2046.png)
+
+**Vectorizing Across Multiple Examples**
+
+**$a^{[2](i)}$** here 2 refers to the layer number and i refers to the $i^{th}$ training example
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2047.png)
+
+X denotes  for 1 training  example  
+$X^{(1)}$ denotes the first training example, and so on
+
+### vectorization for the for loop
+
+The uppercase matrices are made by stacking the lower case letters horizontally
+
+horizontally we are going across different training examples
+and vertical indexing corresponds to the different nodes in the neural network
+
+So, The value on the left topmost corresponds to the activation of the first hidden unit on the first training example
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2048.png)
+
+The right side shows the vectorized implementation
+
+For 3 training examples:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2049.png)
+
+$Z^{[i]} = W^{[i]} + b^{[i]}$ is the correct vectorization 
+
+RECAP: for loop  to  vectorization
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2050.png)
+
+## **Activation Functions**
+
+The purpose of the activation function is to introduce ***non-linearity into the network***
+
+They are denoted by g
+
+we can use different activation funcs for different layers, so we use superscripts to denote g1 g2 etc
+
+cons of tanh(z) and sigmoid(z):
+
+Both’s slope ends up close to being zero when the values of z are large. This slows down gradient descent. So relu was introduced
+
+- How to choose which activation function to use?
+
+1) If our o/p is 0 or 1 (binary classification) we can use sigmoid, mostly don’t use this
+2) tanh(z) (superior to sigmoid but less used)
+3) RELU for other- widely used
+cons of RELU: when Z is negative, activation is zero, but this is fine in practical world. Neural network learns much faster in RELU
+4) Leaky RELU(Z = negative then activation is non zero, less used tho)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2051.png)
+
+### why do you need non-linear activation functions?
+
+if we use linear activation functions, then the neural network will just outputing a linear function of the input which is not enough to form a universal function approximator. Such a network can just be represented as a matrix multiplication, and you would not be able to obtain very interesting behaviors from such a network.
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2052.png)
+
+so, if we use a linear activation func or if we dont have a linear activation function, then no matter how many layers are there, all its doing is just computing a linear activation function. This is equivalent to having no hidden layers
+
+**THE COMPOSITION OF TWO LINEAR FUNCS IS ALSO A LINEAR FUNC , so hidden layers become useless**
+
+One place where we can use linear activation functions is house price prediction. But the hidden layers should still use RELU , sigmoid etc
+
+**Derivatives of Activation Functions**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2053.png)
+
+If z is large (say 10), then g(z) = 1, so slope = g(z) *(g(z) - 1) ⇒ 1 * (1-1) = 0*
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2054.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2055.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2056.png)
+
+## **Random Initialization**
+
+If we initialize all weights to zero, all the hidden layers get symmetric. This symmetry leads to no learning because all neurons in a layer are effectively identical and learn the same features. The network cannot break this symmetry and learn diverse features
+
+Solution to this random initialization:
+
+for activation functions such as sigmoid, tanh we need to initialize W with small quantities
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2057.png)
+
+*Why small numbers?*
+
+This is for sigmoid or tanh activation function. If weight parameters are initially large, we are more likely to get large values of `z` calculated by `z=wx+b`. If we check this in the graph of sigmoid(tanh) function, we can see the slope in large `z` is very close to zero, which would slow down the learning process since parameters are updated by only a very small amount each time.
