@@ -197,4 +197,44 @@ Algorithm (same as previous neural network)
 
 # Random initialization of parameters :-
 
-In Logistic regression, initialization of parameters w and b to 0 won’t be a problem; but not so in Neural Network, where it will still be alright if b is initialized to zero but not w. This is because, by principle of induction, we can state that after several iterations as well, the matrix W[1] will have identical rows.
+In Logistic regression, initialization of parameters w and b to 0 won’t be a problem; but not so in Neural Network, where it will still be alright if b is initialized to zero but not w. This is because, by principle of induction, we can state that after several iterations as well, the matrix W[1] will have identical rows. When 2 hidden units compute the same function, we can say that they are symmetric.
+
+For a shallow neural network, a constant  like 0.01  is fine.  We needsmalliitial values of weights so as to keep z small so that gradient descent doesn’t enter the flat and slow regions of tanh and sigmoid functions.
+
+![Screenshot from 2024-07-09 18-03-51.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-09_18-03-51.png)
+
+![Screenshot from 2024-07-09 18-05-07.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-09_18-05-07.png)
+
+# Week 4 :-
+
+# Deep L-layered Neural Network :-
+
+There are some functions which the DNNs can learn but not shallow ones.
+
+![Types of neural networks](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-09_19-22-50.png)
+
+Types of neural networks
+
+![Screenshot from 2024-07-09 19-23-12.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-09_19-23-12.png)
+
+# Forward Propagation in DNN :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled.png)
+
+The method is very similar to that adopted in logistic regression. just that it is repeated over the various layers.
+
+# Getting Matrix Dimensions right :
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%201.png)
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%202.png)
+
+# Why Deep Representations :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%203.png)
+
+The various layers of Neural Network can be thought of to identify various features of the input, e.g. for an input image, first layer can identify various edges, next layer can identify the various features formed by the combination of specific edges and so on. So, Deep Neural Networks are highly effective.
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%204.png)
+
+There is another result, derived from circuit theory which highlights importance of DNNs. The higher number of layers we have, the total number of neurons required will be distributed over a large number of layers, giving each layer a reasonable number of hidden units. However, if there are lesser number of neurons, then there will be more hidden units per layer. The above example uses the XOR Logic operation to explain it.
