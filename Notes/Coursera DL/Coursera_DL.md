@@ -166,3 +166,35 @@ Now, in vectorizd versin we will just take into consideration that each matrix w
 ![Screenshot from 2024-07-07 21-56-21.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_21-56-21.png)
 
 We have several options for activation functions. One of them is a=tanh(z). It can be thought of to be a version of the sigmoid function, but centred around zero. This characteristic makes it preferrable as we try to have a zero mean for our data. However, as z becomes very large or very small, the derivative of tanh(z) becomes very small, slowing down the gradient descent process. Sigmoid function is still preferrable for output layer, as it gives output between 0 and 1, which can be usefuk in the case of binary classification. Another example is ReLU - Rectified Linear Unit. It has the advantage that it has slope 1 for all positive values of z and slope 0 for all negative values. The slope at z=0 is not defined, however, in actual computations, the odds of attaining the point z=0.00000000 is very small, so thats not a thing of concern. ReLU is mostly used in practice, as the slope doesn’t cause the gradient process to slow down as z→0. There is another version of ReLU i.e. Leaky ReLU, which as a slight slope for ngative values of z. The parameter of 0.01 in Leaky ReLU can be changed in the process of ML.
+
+# Need of non-linear activation functions :-
+
+Linear / Identity activation function has the form : g(z)=z.
+
+Without activation fn the neural network is just computing linear actiavtion function based on the input, irrespective of the no. of hidden layers, making extra hidden layers redundant.Hence, if we use nin-linear activation function just at the output, then it is equivalent to a standard logistic regression model without any hidden layer. However, in case of regression (linear regression) it can be useful to hve linear activation functions, as the output y_hat can have any real value and not just 0 or 1 like for binary classification.
+
+![Screenshot from 2024-07-08 12-13-13.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-08_12-13-13.png)
+
+# Derivatives of various activation functions :-
+
+![Screenshot from 2024-07-08 12-10-14.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-08_12-10-14.png)
+
+![Screenshot from 2024-07-08 12-10-55.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-08_12-10-55.png)
+
+![Screenshot from 2024-07-08 12-11-19.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-08_12-11-19.png)
+
+For ReLU and Leaky ReLU we can choose any of the 2 values of slope, of z>0 and z<0, at z=0.
+
+# Gradient Descent for Neural Networks :-
+
+We must initialize all parameters to random numbers rather than to zero.
+
+![Algorithm (same as previous neural network)](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-08_13-15-55.png)
+
+Algorithm (same as previous neural network)
+
+![Screenshot from 2024-07-08 13-16-25.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-08_13-16-25.png)
+
+# Random initialization of parameters :-
+
+In Logistic regression, initialization of parameters w and b to 0 won’t be a problem; but not so in Neural Network, where it will still be alright if b is initialized to zero but not w. This is because, by principle of induction, we can state that after several iterations as well, the matrix W[1] will have identical rows.
