@@ -146,8 +146,6 @@ Slope can be different at diff points of the curve
 
 **Computation Graph**
 
-A nice illustration by [colah's blog](https://colah.github.io/posts/2015-08-Backprop/) can help better understand.
-
 ![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2014.png)
 
 **Derivatives with a Computation Graph**
@@ -499,3 +497,76 @@ for activation functions such as sigmoid, tanh we need to initialize W with smal
 *Why small numbers?*
 
 This is for sigmoid or tanh activation function. If weight parameters are initially large, we are more likely to get large values of `z` calculated by `z=wx+b`. If we check this in the graph of sigmoid(tanh) function, we can see the slope in large `z` is very close to zero, which would slow down the learning process since parameters are updated by only a very small amount each time.
+
+# **Week 4: Deep Neural Networks**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2058.png)
+
+Notation:
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2059.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2060.png)
+
+There is no vectorization for l=4 to total number of layers
+we have to use for loop for all layers
+
+**Getting your Matrix Dimensions Right**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2061.png)
+
+for m examples, dimensions are: 
+
+Z[1] = (n[1], m) 
+W[1] = (n[1], n[0])
+X = (n[0], m)
+b[1] = (n[1], 1) so bias remains same for m examples also, but due to python broadcasting it becomes (n[1], m)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2062.png)
+
+**Why Deep Representations?**
+
+- deep neural network over big neural network
+- Deep neural network with multiple hidden layers might be able to have the earlier layers learn lower level simple features and then have the later deeper layers then put together the simpler things it's detected in order to detect more complex things like recognize specific words or even phrases or sentences.
+- If there aren't enough hidden layers, then we might require exponentially more hidden units to compute in shallower networks.
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2063.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2064.png)
+
+**Building Blocks of Deep Neural Networks**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2065.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2066.png)
+
+da[0] is not useful to calculate as it is derivative wrt input parameters
+
+**Forward and Backward Propagation**
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2067.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2068.png)
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2069.png)
+
+**Parameters vs Hyperparameters**
+
+*Parameters*:
+
+- weight matrices `W` of each layer
+- bias terms `b` of each layer
+
+*Hyper parameters*:
+
+- number of hidden units `n[l]`
+- learning rate
+- number of iteration
+- number of layers `L`
+- choice of activation functions
+
+see the values of hyperparameters which fit the best
+
+### What does this have to do with the brain?
+
+![Untitled](course%201-%20Neural%20Networks%20and%20Deep%20Learning%20fe1a5d4647f849878b26073f59a4b59e/Untitled%2070.png)
