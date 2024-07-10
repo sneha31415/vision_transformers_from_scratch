@@ -1,5 +1,83 @@
 # Coursera  Course
 
+# Week 1 :-
+
+# Neural Network :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled.png)
+
+A neuron can be thought of a unit which performs an operation, like predicting the proce of a house based on its size. It may use several mathematical functions for it, like ReLU, sigmoid, etc.
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%201.png)
+
+We can create a neural network using several layes of neurons, each of the previous layer neurons causing certain firing patterns in the next layer. We only need to provide input X and output Y (supervised learning).
+
+# Supervised Learning with Neural Networks :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%202.png)
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%203.png)
+
+Structured data - which can be arranged in arrays in computers
+
+Unstructured data - which cannot be arranged directly as arrays in a computer/ cannot be bound by a structure.
+
+# Significance of Deep Learning :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%204.png)
+
+For smaller datasets, the performance (accuracy) of neural networks may vary, but for larger datasets, larger neural networks are more efficient.
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%205.png)
+
+Increase in datasets due to digitization, increase in computation power due to advancements in CPUs and GPUs, increase in efficiency of algorithms help in increasing efficiency of the experiments in DL which speeds up ideation and coding.
+
+# Week 2 :-
+
+# Binary Classification :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%206.png)
+
+Binary classificatiuon refers to classification of the input into 1 of the 2 categories - 0 or 1. Here, we aim to classify cat images. We first group all the information from each pixel of each 8*8 pixels image, of each of the 3 RGB color channels, into a column vector.
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%207.png)
+
+Then, considering we have ‘m’ images we arrange all of their column vectors side by side, forming input matrix. The matrix of labels can be formed in a similar way as a 1*m matrix.
+
+# Logistic Regression :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%208.png)
+
+Logistic regression is a machine learning algorithm, having the form z=w.T*X+b; w : weights; b: bias.The output is obtained by passing this z into a nonlinear function like sigmoid (for binary classification).
+
+# Logistic Regression Cost Function :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%209.png)
+
+The logistic regression algorithm has a loss function of the form given above. It is computed for each training example. The cost function is the average of the loss function. It is computed once for all training examples.
+
+# Gradient Descent :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2010.png)
+
+We aim to find the point where the cost function is zero, and while approaching it we change values of w and b and thus tume the model.
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2011.png)
+
+Hence, we repeated;ly tune the values of w and b. Here, learning rate, a hyperparameter is used.
+
+# Computation Graph :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2012.png)
+
+Computation graph basically represents the way in which variables come together to form expressions. Forward Propagation is when we move towards the final output variable. Backpropagation is when we move back from the final output variable, here, by means of derivatives.
+
+# Derivatives with Computation Graph :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2013.png)
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2014.png)
+
 # Backpropagation :-
 
 We now aim to find the derivative of final output variable (in this case, the cost ‘J’) w.r.t various intermediate variables. Hence we are going backwards in the computation graph, due to which this process is termed as ‘Backpropagation’. (going from right to left). 
@@ -119,13 +197,23 @@ As shown in the general principle of brodcasting, If we give a (m, n) dimensiona
 
 We should refrain from using rank 1 arrays due to thier non-intuitive behaviour. We can always reshape rank 1 arrays or any vector as vectors/matrices of required size. We can use assert statements to ensure matrices/vectors of correct size.
 
+# Explanation of Logistic Regression Cost Function : -
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2015.png)
+
+We use y and y_hat as per their usual notations. Hence, there is a formula for required probability, as shown in red box. We apply log to base e on both sides of the equation to get it equated to negation of the loss. As the logarithm function is monotonically increasing, so according to the last equation. 
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2016.png)
+
+For an identically independently distributed dataset, so we have the formula for the probability of an event in the dataset as the product of all individual probabilities over the whole dataset. Simplifying this further we get the formula for cost function. We divide this by m for better scaling our data of cost.
+
 # Week 3
 
 # Neural Networks Overview :-
 
 ![Screenshot from 2024-07-07 16-48-33.png](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Screenshot_from_2024-07-07_16-48-33.png)
 
-Now, we just repeat what calculations we did for logistic regression mdel over several neurons. Such a group of stacked neurons is termed as ‘Layer’ and variable g of a layer 1 can be represented as g superscript [1]. g superscript (1) refers training example 1. We do calculations of z, a=y_hat in each layer, in each neuron and pass on the activations of all these neurons to those of the next layer. Derivatives, which are used in backpropagation, can also be represented in a fashion similar to that of variables as shown in red in above image.
+Now, we just repeat what calculations we did for logistic regression model over several neurons. Such a group of stacked neurons is termed as ‘Layer’ and variable g of a layer 1 can be represented as g superscript [1]. g superscript (1) refers training example 1. We do calculations of z, a=y_hat in each layer, in each neuron and pass on the activations of all these neurons to those of the next layer. Derivatives, which are used in backpropagation, can also be represented in a fashion similar to that of variables as shown in red in above image.
 
 # Neural Networks Representation :-
 
@@ -219,22 +307,52 @@ Types of neural networks
 
 # Forward Propagation in DNN :-
 
-![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled.png)
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2017.png)
 
 The method is very similar to that adopted in logistic regression. just that it is repeated over the various layers.
 
 # Getting Matrix Dimensions right :
 
-![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%201.png)
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2018.png)
 
-![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%202.png)
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2019.png)
 
 # Why Deep Representations :-
 
-![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%203.png)
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2020.png)
 
 The various layers of Neural Network can be thought of to identify various features of the input, e.g. for an input image, first layer can identify various edges, next layer can identify the various features formed by the combination of specific edges and so on. So, Deep Neural Networks are highly effective.
 
-![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%204.png)
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2021.png)
 
 There is another result, derived from circuit theory which highlights importance of DNNs. The higher number of layers we have, the total number of neurons required will be distributed over a large number of layers, giving each layer a reasonable number of hidden units. However, if there are lesser number of neurons, then there will be more hidden units per layer. The above example uses the XOR Logic operation to explain it.
+
+# Building Blocks of DNNs :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2022.png)
+
+Basically for forward propagation, we give the activation of previous layer as input and by operation of weights and biases on them, we get activations of the current later as well as weighted sum for each hidden unit (stored in cache). In backpropagation, we give the derivative of cost function w.r.t. activation of current layer and get the same derivative, but w.r.t activations of previous layer, as well as derivative of cost function w.r.t. weights and biases of the current layer.
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2023.png)
+
+# Forward and Backward Propagation :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2024.png)
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2025.png)
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2026.png)
+
+# Hyperparameters and Parameters :-
+
+Hyperparameters arethe  parameters that ultimately control the parameters i.e. W[l] and b[l]. Hyperparameters include learning rate (which could,in turn, determine the number of iterations in gradient descent), number of hidden  layers, umber of hidden units, etc. The est value of hyperparameters can change with time. 
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2027.png)
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2028.png)
+
+We need to go over this cycle several times to find the most suitable value of hyperparameter(s) for our application. Also, one intuition of hyperparameter(s) may not necessarily be carried over tp another type of problem, so trial and error is the only solution.
+
+# Analogy between Human Brain and DL :-
+
+![Untitled](Coursera%20Course%20ad96fa4029d842568f1526cf6c66dc59/Untitled%2029.png)
