@@ -1,5 +1,7 @@
 # course 2
 
+## Setting up your machine learning application
+
 **Train / Dev / Test sets**
 
 Setting up the training, development (dev, also called validate set) and test sets has a huge impact on productivity. It is important to choose the dev and test sets from the same distribution, The training set can come from a different distribution and it must be taken randomly from all the data.
@@ -37,6 +39,8 @@ Both high bias and variance :=
 hight variance : Collect more training data to help the model generalize better and reduce overfitting
 
 ![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%205.png)
+
+## Regularizing your neural network
 
 **Regularization**
 
@@ -134,3 +138,88 @@ key it high when there is a lower chance of overfitting, like in the layer where
 - **Early stopping**: stopping halfway to get a mid-size `w`.
     - *Disadvantage*: early stopping couples two tasks of machine learning, optimizing the cost function `J` and not overfitting, which are supposed to be completely separate tasks, to make things more complicated.
     - *Advantage*: running the gradient descent process just once, you get to try out values of small `w`, mid-size `w`, and large `w`, without needing to try a lot of values of the L2 regularization hyperparameter lambda.
+
+## Setting up your optimization problem
+
+### **Normalizing Inputs**
+
+**When to normalize inputs?**
+⇒ when the input features are in very different ranges like x1 = {0 to 1000} and x = {0 to 1}
+
+subtract mean from x and then divide x by variance
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2013.png)
+
+mean gets set to 0 and variance to 1
+
+Due to  this, all the features get to a similar scale
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2014.png)
+
+**Vanishing / Exploding gradients**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2015.png)
+
+- In a very deep network derivatives or slopes can sometimes get either very big or very small, maybe even exponentially, and this makes training difficult.
+- **The weights W, if they're all just a little bit bigger than one or just a little bit bigger than the identity matrix, then with a very deep network the activations can explode. And if W is just a little bit less than identity, the activations will decrease exponentially.**
+
+**Weight Initialization for Deep Networks**
+
+role of weight initialization :
+
+- **Proper Initialization**: By starting with weights that have a reasonable variance (e.g., `1/n` or `2/n`), the network is more likely to converge to a lower training (and generalization) error. Proper initialization can help in finding a good solution in the loss landscape.
+- **Improper Initialization**: If the weights are poorly initialized, gradient descent might struggle to find a good minimum, potentially getting stuck in poor local minima or taking an excessively long time to converge.
+- Preventing vanishing and exploding gradients.
+- Ensuring proper signal propagation.
+- Speeding up the convergence of gradient descent.
+- Increasing the odds of finding a good minimum in the loss landscape.
+
+how to train a deep neural network without the weights exploding to large values or depleting to zero
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2016.png)
+
+A partial solution to the problems of vanishing and exploding gradients is better or more careful choice of the random initialization for neural network.
+
+For a single neuron, suppose we have `n` features for the input layer, then we want `Z = W1X1 + W2X2 + ... + WnXn` not blow up and not become too small, so the larger `n` is, the smaller we want `Wi` to be.
+
+- It's reasonable to set variance of `Wi` to be equal to `1/n`
+- It helps reduce the vanishing and exploding gradients problem, because it's trying to set each of the weight matrices `W` not too much bigger than `1` and not too much less than `1`.
+- Generally for layer `l`, set `W[l]=np.random.randn(shape) * np.sqrt(1/n[l-1])`.
+    - For `relu` activation, set `Var(W)=2/n` by `W[l]=np.random.randn(shape) * np.sqrt(2/n[l-1])`. (aka He initialization by [Kaiming He](http://kaiminghe.com/))
+    - For `tanh` activation, `W[l]=np.random.randn(shape) * np.sqrt(1/n[l-1])`. (Xavier initialization)
+    - `W[l]=np.random.randn(shape) * np.sqrt(2/(n[l-1]+n[l]))` (Yoshua Bengio)
+- `1` or `2` in variance `Var(W)=1/n or 2/n` can be a hyperparameter, but not as important as other hyperparameters.
+
+**Numerical approximation of gradients**
+
+Numerically verify implementation of derivative of a function is correct and hence to check if there is a bug in the backpropagation implementation.
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2017.png)
+
+two sided difference formula is much more accurate for gradient checking
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2018.png)
+
+**Gradient Checking**
+
+**Gradient checking is a valuable technique to ensure that the backpropagation implementation in our neural network is correct. By numerically approximating the gradients and comparing them with the gradients computed by backpropagation, we can verify the accuracy of our implementation.**
+
+**concatenate** into a giant vector theta
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2019.png)
+
+for each example i , check if `d(theta) approx` is equal to `d(theta)`
+
+![Screenshot from 2024-07-18 23-38-27.png](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Screenshot_from_2024-07-18_23-38-27.png)
+
+1. `diff_ratio ≈ 10^-7`, great, backprop is very likely correct.
+2. `diff_ratio ≈ 10^-5`, maybe OK, better check no component of this difference is particularly large.
+3. `diff_ratio ≈ 10^-3`, worry, check if there is a bug.
+
+**Gradient Checking Implementation Notes**
+
+d(theta)approx takes a lot of time to compute so compute only in debugging time and not training time
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2020.png)
+
+- for dropout, we can first check grad, then turn on dropout
