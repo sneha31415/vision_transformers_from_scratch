@@ -223,3 +223,169 @@ d(theta)approx takes a lot of time to compute so compute only in debugging time 
 ![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2020.png)
 
 - for dropout, we can first check grad, then turn on dropout
+
+**Quiz:**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2021.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2022.png)
+
+## Week 2
+
+**Mini-batch Gradient Descent**
+
+for each little step of gradient descent, we need to process the entire training set
+If m is large, this will take a lot of time
+so we split the training set into mini batches(baby training sets) 
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2023.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2024.png)
+
+now, we will implement one step of gradient descent using X^{t}, Y^{t}
+
+### Process Overview(no need to wait for entire training set to get processed)
+
+1. **Initialization**: Initialize model parameters.
+2. **Epoch Loop**: For each epoch:
+    - **Shuffle Data**: Optionally shuffle the training data to ensure each epoch has a different order of training examples.
+    - **Minibatch Loop**: For each minibatch:
+        - **Select Minibatch**: Choose the next minibatch of data.
+        - **Compute Gradient**: Calculate the gradient of the loss function with respect to the model parameters using only the minibatch data.
+        - **Update Parameters**: Adjust the model parameters using the computed gradients.
+    - **Repeat**: Continue until the entire dataset has been processed.
+
+# Understanding Mini-batch Gradient Descent
+
+the batch gradient descent must always and always decrease
+But in case of mini-batch gradient descent, it is possible that X{2}, Y{2} is a harder batch than the X{1}, Y{1} batch (in ways like the X{2}, Y{2} mini batch might have more mislabeled things that increase the cost). Thus, the graph can go a bit noisy
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2025.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2026.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2027.png)
+
+mini-batch size is a hyperparameter;
+
+batch size better in [64, 128, 256, 512], a power of 2;
+
+make sure that mini-batch fits in CPU/GPU memory.
+
+**exponentially Weighted Averages**
+
+DEFINITION:
+
+Exponentially Weighted Averages (EWA), also known as Exponential Moving Averages (EMA), are used to smooth time series data or other sequences to identify trends and patterns by giving more weight to recent observations. This method is particularly useful in various fields such as finance, signal processing, and machine learning, especially in optimization algorithms like Adam.
+
+### Key Concepts
+
+1. **Weighting Factor (β)**:
+    - The weighting factor β (between 0 and 1) determines the rate at which the influence of older observations decays. A higher β means slower decay (more weight to older values), while a lower β means faster decay (more weight to recent values).
+2. **Recursive Calculation**:
+    - EWA is calculated recursively using the current observation and the previous average. This allows for efficient computation without needing to store the entire history of observations.
+
+### 
+
+yellow ⇒ beta = 0.5 → that means  averaging over 2 days(so its more fluctuating)
+green ⇒ beta = 0.98 → that means averaging over 50 days
+red  ⇒ beta = 0.9 → averaging over 10 days
+
+*** theta is the actual temp of $ith$ day
+
+v is the exponentially weighted parameter
+
+more is beta, more will it be affected by the temp of the previous day as per the formula Vt = beta(Vt-1) + (1-beta)(theta t)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2028.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2029.png)
+
+**Understanding Exponentially Weighted Averages**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2030.png)
+
+just one line of code
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2031.png)
+
+**Bias Correction in Exponentially Weighted Averages**
+
+aim : making the computation of the averages more accurate
+
+We need bias correction in the initial phase of learning
+
+The expected average line is green but what we get is purple one. This is because initial average is zero, so v1 and v2 are very low. So, we use bias correction term = Vt/(1 - Bt)
+
+The bias correction term is very less significant for higher values of beta so need not worry about that
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2032.png)
+
+**Gradient Descent with Momentum** 
+
+This smoothes out the steps of gradient descent. The oscillations in the vertical direction average out to something close to zero
+
+Theory:
+
+Because mini-batch gradient descent makes a parameter update after seeing just a subset of examples, the direction of the update has some variance, and so the path taken by mini-batch gradient descent will "oscillate" toward convergence. Using momentum can reduce these oscillations.
+
+- gradient descent with momentum, which computes an EWA of gradients to update weights almost always works faster than the standard gradient descent algorithm.
+- algorithm has two hyperparameters of `alpha`, the learning rate, and `beta` which controls your exponentially weighted average. common value for `beta` is `0.9`.
+
+dw =  acceleration for going down the bowl
+V_(dw) = velocity for going down the bowl
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2033.png)
+
+V_dw and V_db is initialised as zero vector with dimensions same as W and b
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2034.png)
+
+left formula for V_dw is more preffered
+
+**RMSprop:**
+
+RMSprop(root mean square), similar to momentum, has the effects of damping out the oscillations in gradient descent and mini-batch gradient descent and allowing you to maybe use a larger learning rate alpha.
+
+We know that we have to slow down the learning rate in the vertical direction and fasten in the horizontal direction
+
+so, The learning rate in the vertical direction must get low. So, Sdb must be large because then b will get updated slowly
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2035.png)
+
+The algorithm computes the exponentially weighted averages of the squared gradients and updates weights by the square root of the EWA.
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2036.png)
+
+**Adam Optimization Algorithm:**
+
+- Adam (Adaptive Moment Estimation) optimization algorithm is basically putting momentum and RMSprop together and combines the effect of gradient descent with momentum together with gradient descent with RMSprop.
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2037.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2038.png)
+
+**Learning Rate Decay**
+
+The learning algorithm might just end up wandering around, and never really converge, because you're using some fixed value for alpha. Learning rate decay methods can help by making learning rate smaller when optimum is near.
+
+formula for learning rate decay 𝛼*α* is:
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2039.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2040.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2041.png)
+
+**The Problem of Local Optima**
+
+plateau ⇒ region where derivative is close to zero for a long time
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2042.png)
+
+- First, you're actually pretty unlikely to get stuck in bad local optima, but much more likely to run into a saddle point, so long as you're training a reasonably large neural network, save a lot of parameters, and the cost function J is defined over a **relatively high dimensional space**.
+- second, since the gradient is low at the plateau, the learning gets slow. And this is where algorithms like **momentum** or **RMSProp** or **Adam** can really help your learning algorithm.
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2043.png)
+
+we can see in the image that the learning is quite slow due to plateau
