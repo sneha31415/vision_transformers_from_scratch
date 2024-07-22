@@ -389,3 +389,143 @@ plateau ⇒ region where derivative is close to zero for a long time
 ![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2043.png)
 
 we can see in the image that the learning is quite slow due to plateau
+
+## WEEK 3
+
+**Tuning Process**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2044.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2045.png)
+
+we find that bottom right gives the best set of hyperparameter so now do fine searching there . This is coarse to fine searching
+
+**Using an Appropriate Scale to pick Hyperparameters\**
+
+Sampling on a linear scale is a bad idea so we sample on a logarithmic scale
+
+sampling on a logarithmic scale
+
+Take the extreme values(here 0.0001 to 1). Get a and b(here -4 and 0)
+
+now, your randomly chosen hyperparameters sample are 10 ^ r where r ranges from a to b
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2046.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2047.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2048.png)
+
+**Hyperparameters tuning in practice: Panda vs. Caviar**
+
+- **Panda approach**: Not enough computational capacity: babysitting one model. Used when you don’t have enough computational capacity / resources. Or the model is too large
+- **Caviar approach**: training many models in parallel
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2049.png)
+
+normalization:  𝑋=𝑋/𝜎
+
+### **Batch Normalization**
+
+**Normalizing Activations in a Network**
+
+To enhance the training of the current layer, we have to normalise the previous layer
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2050.png)
+
+usually normalization before activation is much more common. i.e normalising Z is more common than A
+
+The mean and variance of the hidden layers may not need to be zero. they have standardised mean and variance which is controlled by the parameters gamma and beta
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2051.png)
+
+- What batch norm does is it applies that normalization process not just to the input layer, but to the values even deep in some hidden layer in the neural network. So it will apply this type of normalization to normalize the mean and variance of `z[i]` of hidden units.
+- One difference between the training input and these hidden unit values is that you might not want your hidden unit values be forced to have mean 0 and variance 1.
+    - For example, if you have a sigmoid activation function, you don't want your values to always be clustered in the normal distribution around `0`. You might want them to have a larger variance or have a mean that's different than 0, in order to better take advantage of the nonlinearity of the sigmoid function rather than have all your values be in just this linear region (near `0` on sigmoid function).
+    - What it does really is it then shows that your hidden units have standardized mean and variance, where the mean and variance are controlled by two explicit parameters `gamma` and `beta` which the learning algorithm can set to whatever it wants.
+
+### Fitting Batch Norm into a Neural Network
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2052.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2053.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2054.png)
+
+**Why does Batch Norm work?**
+
+covariate shift:
+If the distribution of X changes, you might want to  retrain your learning algorithm
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2055.png)
+
+example you train your algorothm over black cats but test over colored ones, then it might not give accurate results
+
+[https://www.notion.so](https://www.notion.so)
+
+The mapping from X to Y remains same(i.e whether a cat image or not) but the distribution changes
+
+So, batch norm ensures that the distribution of hidden layers remains the same even if the values of Z1 , Z2, Z3 …. keep changing  after every update. Each layer is constrained to have the same mean and variance
+
+This allows layers to learn independently
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2056.png)
+
+**Summary:**
+
+- By normalizing all the features, input features `X`, to take on a similar range of values that can speed up learning. So batch normalization is doing a similar thing.
+- To avoid *covariate shift* of data distribution, which makes the parameters change a lot in the training progress. Batch norm can reduce the amount that the distribution of the hidden unit values shifts around by making the mean and variance of `z` values remain the same.
+    - It allows each layer of the network to learn by itself, a little bit more independently of other layers, and this has the effect of speedup of learning in the whole network.
+    - From the perspective of one of the later layers of the neural network, the earlier layers don't get to shift around as much, because they're constrained to have the same mean and variance. This makes the job of learning on the later layers easier.
+- It has a slight regularization effect.
+    - The mean and variance is a little bit noisy because it's estimated with just a relatively small sample of data (each mini-batch). So similar to dropout, it adds some noise to each hidden layer's activations.
+    - It's forcing the downstream hidden units not to rely too much on any one hidden unit.
+    - The noise added is quite small, so not a huge regularization effect. You can use batch norm together with dropouts if you want the more powerful regularization effect of dropout.
+    - Using bigger mini-batch size can reduce noise and therefore reduce regularization effect.
+    - Don't turn to batch norm as a regularization. This is not the intent of batch norm.
+    - Just use it as a way to normalize hidden units activations and therefore speedup learning.
+- At test time, you try to make predictors and evaluate the neural network, you might not have a mini-batch of examples, you might be processing one single example at the time. So, at test time you need to do something slightly differently to make sure your predictions make sense.
+
+**Batch Norm at Test Time**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2057.png)
+
+- Batch norm processes our data one mini batch at a time, but at test time we need to process examples one at a time.
+- In theory we could run the whole training set through final network to get `𝜇` and `𝜎^2`.
+- In practice, usually implement an **exponentially weighted average** where we just keep track of the `𝜇` and `𝜎^2` we're seeing during training and use an EWA (across mini-batches), also sometimes called the running average, to get a rough estimate of `𝜇` and `𝜎^2` and then use these to scale at test time.
+    - `𝜇{1}[l], 𝜇{2}[l], 𝜇{3}[l], ...` —> `𝜇[l]`
+    - `𝜎^2{1}[l], 𝜎^2{2}[l], 𝜎^2{3}[l], ...` —> `𝜎^2[l]`
+
+### **Multi-class classification**
+
+**Softmax Regression**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2058.png)
+
+softmax example with no hidden layer =
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2059.png)
+
+if there were only two classes, the plot would have become same as logistic regression
+
+**Training a Softmax Classifier**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2060.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2061.png)
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2062.png)
+
+**Deep Learning Frameworks**
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2063.png)
+
+w is the parameter u want to optimize
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2064.png)
+
+since our cost func = (W - 5)^2 so, after 1000 steps of adam optimization, we get w = 5.00000001 which is the least value of W for our cost func
+
+consider x as the data that controls the coeffients of the cost function
+
+![Untitled](course%202%2087768574c27c42ddb3ecb9e96be6fab9/Untitled%2065.png)
