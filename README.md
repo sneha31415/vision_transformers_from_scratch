@@ -38,7 +38,7 @@ Despite their success in NLP, the use of Transformers in computer vision (CV) is
 - [Akash Kawle](https://github.com/shinymack) - ackawle_b23@et.vjti.ac.in
 
 ## Acknowledgements 
-- [SRA Vjti](https://www.sravjti.in/) Eklavya 2024
+- [SRA VJTI](https://www.sravjti.in/) Eklavya 2024
   
 A heartful gratitude to the mentors of this project:
 - [Aryan Nanda](https://github.com/AryanNanda17)
