@@ -399,6 +399,8 @@ Now we can ignore all the other weights and optimize with **A and abandon**
 
 ![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2045.png)
 
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2046.png)
+
 *How to sample context `c`*:
 
 - One thing you could do is just sample uniformly, at random, from your training corpus.
@@ -413,18 +415,215 @@ This ensures that $e_c$ of not only the most frequent words is updated but also 
 first one is the positive example i.e with the correct target
 The subsequent rows are the context with the wrong word i.e with random word from the dict (NEGATIVE EXAMPLES)
 
-![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2046.png)
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2047.png)
 
 on every iteration, we are going to train only ( k + 1 ) of them and not updating a 10000 way softmax classifier
 
-![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2047.png)
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2048.png)
 
 How to select The negative examples
 
-![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2048.png)
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2049.png)
 
 where f is the frequency of the word
 
-![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2049.png)
+GloVe (global vector for word representation)
 
 ![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2050.png)
+
+minimizing this square cost function allows you to learn meaningful word embeddings
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/518d809e-e533-476a-b985-1876364e8458.png)
+
+**Sentiment Classification**
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2051.png)
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2052.png)
+
+Here we are summing everything into a big vector.
+But since the sequence of words also matters and not just the embeddings, (like here there is a lot of repetition of the word “good” but still it is a negative review), so we need a rnn model here
+
+many to one: 
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2053.png)
+
+Therefore, Instead of just summing all of your word embeddings, you can instead use a RNN for sentiment classification.
+
+**Debiasing Word Embeddings**
+
+Word embeddings maybe have the bias problem such as gender bias, ethnicity bias and so on. As word embeddings can learn analogies like man is to woman like king to queen. The paper shows that a learned word embedding might output:
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2054.png)
+
+**Reducing bias in word embeddings**
+
+- *Identify bias direction*
+    - The first thing we're going to do is to identify the direction corresponding to a particular bias we want to reduce or eliminate.
+    - And take a few of these differences and basically average them. And this will allow you to figure out in this case that what looks like this direction is the gender direction, or the bias direction. Suppose we have a 50-dimensional word embedding.
+        
+        ![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/9c06af32-b9ec-48ca-9b6b-34beafd3632b.png)
+        
+    - Then we have
+        - `cosine_similarity(sophie, g)) = 0.318687898594`
+        - `cosine_similarity(john, g)) = -0.23163356146`
+        - to see male names tend to have positive similarity with gender vector whereas female names tend to have a negative similarity. This is acceptable.
+    - But we also have
+        - `cosine_similarity(computer, g)) = -0.103303588739`
+        - `cosine_similarity(singer, g)) = 0.185005181365`
+        - It is astonishing how these results reflect certain unhealthy gender stereotypes.
+    - The bias direction can be higher than 1-dimensional. Rather than taking an average, SVD (singular value decomposition) and PCA might help.
+- *Neutralize*
+    - For every word that is not definitional, project to get rid of bias.
+    - That means put them in the non-bias direction(eg babysitter, doctor are gender neutral)
+    
+    ![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2055.png)
+    
+- *Equalize pairs*
+    - In the final equalization step, what we'd like to do is to make sure that words like grandmother and grandfather are both exactly the same similarity, or exactly the same distance, from words that should be gender neutral, such as babysitter or such as doctor.
+    - The key idea behind equalization is to make sure that a particular pair of words are equi-distant from the 49-dimensional g⊥.
+    
+
+Quiz:
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2056.png)
+
+## Week 3 sequence models and attention mechanism
+
+**Basic Models**
+
+For converting to english translation :
+Use an encoder network that inputs a french sentence that will generate the and then a decoder to decode the vector and output the english sentence
+
+**Image captioning**
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2057.png)
+
+input an image into a convolutional neural network(maybe a pretrained alexNet) and have that learn the features of the input image. And if we get rid of the final softmax unit, the pretrained alexnet will give us a 4096 dimensional feature vector which represents the input image
+so, this pretrained network will be the input vector of the encoder
+
+Then we can feed this to an rnn to output one word at a time 
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2058.png)
+
+machine translation is quite similar to language model
+
+The decoder part of the machine translation is same a language model
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2059.png)
+
+- You can use a language model to estimate the probability of a sentence.
+- The decoder network of the machine translation model looks pretty much identical to the language model, except that instead of always starting along with the vector of all zeros, it has an encoder network that figures out some representation for the input sentence.
+- Instead of modeling the probability of any sentence, it is now modeling the probability of the output English translation conditioned on some input French sentence. In other words, you're trying to estimate the probability of an English translation.
+
+Its not optimal to pick one word at a time as we see that “going” is a much better word considering x but the whole translation does not end up being the very best
+
+![Untitled](course%205%201b7ff401be374ddc93cfd54496cb5a8c/Untitled%2060.png)
+
+It is better to use an approximate search algorithm. Here, it will try to pick the sentence y that maximizes the conditional probability
+
+**Beam search ⇒ approximate search algorithm**
+
+given an input sentence, we do not want to output a random translation but rather the best and a more likely translation. 
+Beam search is an algo to this .
+
+If B = 3, then we need 3 copies of the network.
+Now, we pick the 3 words with the most probabilty of being the first word. So we have 3 choices of first word
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image.png)
+
+Now since for each 1st word out of the 3 choices, the 2nd word can be any of the 10,000 words from the vocab. so, we have total 10,000 * 3 = 30,000 choices. Each first word is hardcoded into one of the neural network copies
+
+now out of these 30,000 choices we will select the ones that have the most probability of being the first 2 words
+eg . “in september”, “jane is”, “jane visits” will be selected as they have the highest probability
+
+Now for the 3 word we hardwire the 3 possibilities of the first 2 words in each of the NN
+
+Now  again, we will pick the top 3 possibilies of the first 3 words of the sentence 
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%201.png)
+
+So, beam search is maximising the probability of the next word given the previous words and the input sentence(french sentence)
+
+B = 1 means greedy search 
+
+**Refinements to Beam Search**
+
+we were maximizing the product of probabilities till now. 
+But multiplying a lot of numbers less than 1 will result in a very tiny number, which can result in numerical underflow.
+
+So now we will maximise the sum of the log of probabilities
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%202.png)
+
+- If you have a very long sentence, the probability of that sentence is going to be low, because you're multiplying many terms less than 1. And so the objective function (the original version as well as the log version) has an undesirable effect, that maybe it unnaturally tends to prefer very short translations. It tends to prefer very short outputs. B**ecause shorter sentences have higher probability due to less words**
+
+### **Solution: Normalized Log-Likelihood Objective**
+
+- **Normalized Log-Likelihood:** To counter this bias, a normalized log-likelihood objective is sometimes used. The idea is to adjust the log-likelihood by normalizing it, for example, by the length of the sentence. This normalization reduces the tendency of the model to favor shorter sentences, making it more likely to produce translations of appropriate length, even when they are longer.
+- **Why Normalize:** By normalizing the log-likelihood, you prevent the model from being unfairly biased towards shorter outputs. It helps the model focus on the actual quality of the translation, rather than just the length.
+
+**A normalized log-likelihood objective:**
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%203.png)
+
+Ty = vocab size
+
+alpha is also an hyperparameter. If alpha = 0 then we do not normalise by length
+
+**size of B ⇒**
+
+large B = considers more possibilities(so better result) but slower computation
+small B = less possibilities but faster computation
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%204.png)
+
+**Error Analysis in Beam Search**
+
+- Beam search is an approximate search algorithm, also called a heuristic search algorithm. And so it doesn't always output the most likely sentence.
+- In order to know whether it is the beam search algorithm that's causing problems and worth spending time on, or whether it might be the RNN model that's causing problems and worth spending time on, we need to do error analysis with beam search.
+- Getting more training data or increasing the beam width might not get you to the level of performance you want.
+- You should break the problem down and figure out what's actually a good use of your time.
+- *The error analysis process:*
+    - Problem:
+        - To translate: `Jane visite l’Afrique en septembre.` (x)
+        - Human: `Jane visits Africa in September.` (y)
+            - 
+        - Algorithm: `Jane visited Africa last September.` (ŷ) which has some error.
+        
+        y* ⇒ human translation
+        
+        y hat ⇒ by algorithm
+        
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%205.png)
+
+If probability of the human translation is greater but still the less prob sentence is picked then the fault is of beam search bcuz its his responsibility to pick the sentence with the max probability
+Job of beam search ⇒ maximise the prob of the output sentence
+
+But if P of the human translation is less than its not the fault of the beam search
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%206.png)
+
+**Bleu Score (Optional)**
+
+used when the human references are given
+
+Blue ⇒ bilingual evaluation understudy 
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%207.png)
+
+we will also look over pairs of words
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%208.png)
+
+clip count ⇒ max number of times the bigram appears in either reference 1 or reference 2
+count ⇒ the max times the bigram appears the candidate
+
+Now, for bleu score, P_n  = (sum of clip count) / (sum of count)
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%209.png)
+
+blue score calculation ⇒
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2010.png)
