@@ -627,3 +627,100 @@ Now, for bleu score, P_n  = (sum of clip count) / (sum of count)
 blue score calculation ⇒
 
 ![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2010.png)
+
+**Attention Model Intuition**
+
+We‘ve been using an Encoder-Decoder architecture for machine translation. Where one RNN reads in a sentence and then different one outputs a sentence. its difficult for the NN to memorize a super long sentence. so, for long sentence the encoder decoder model may not work well as it first encodes the whole sentence. 
+
+There's a modification to this called the Attention Model that makes all this work much better.
+
+The French sentence:
+
+> Jane s'est rendue en Afrique en septembre dernier, a apprécié la culture et a rencontré beaucoup de gens merveilleux; elle est revenue en parlant comment son voyage était merveilleux, et elle me tente d'y aller aussi.
+> 
+
+The english translation :
+
+> Jane went to Africa last September, and enjoyed the culture and met many wonderful people; she came back raving about how wonderful her trip was, and is tempting me to go too.
+> 
+
+The way a human translator would translate this sentence is not to first read the whole French sentence and then memorize the whole thing and then regurgitate an English sentence from scratch. Instead, what the human translator would do is read the first part of it, maybe generate part of the translation, look at the second part, generate a few more words, look at a few more words, generate a few more words and so on.
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2011.png)
+
+The Encoder-Decoder architecture above is that it works quite well for short sentences, so we might achieve a relatively high Bleu score, but for very long sentences, maybe longer than 30 or 40 words, the performance comes down. (The blue line)
+
+green ⇒ through attention model
+blue ⇒  by NN memorising the whole sentence 
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2012.png)
+
+First step of RNN
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2013.png)
+
+alpha<1,1> denotes How much attention should we be paying to first word of the french input sentence for computing the 1st word of the translation.
+
+So, to generalise, alpha<t, t’> indicates how much attention should you give to the $t^{'th}$ word of the input french sentence to generate the $t^{th}$ word of the english sentence
+
+The context C depends on the various alpha coming 
+S denotes State
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2014.png)
+
+Assume you have an input sentence and you use a bidirectional RNN, or bidirectional GRU, or bidirectional LSTM to compute features on every word. In practice, GRUs and LSTMs are often used for this, maybe LSTMs be more common. The notation for the Attention model is shown below.
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2015.png)
+
+how to calculate attention weights?
+
+Compute e<t,t'> using a small neural network:
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2016.png)
+
+• One downside to this algorithm is that it does take quadratic time or quadratic cost to run this algorithm. If you have Tx words in the input and Ty words in the output then the total number of these attention parameters are going to be Tx * Ty.
+
+Visualize the attention weights 𝛼<t,t'>:
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2017.png)
+
+**Speech Recognition**
+
+**Speech recognition**
+
+- What is the speech recognition problem? You're given an audio clip, x, and your job is to automatically find a text transcript, y.
+- So, one of the most exciting trends in speech recognition is that, once upon a time, speech recognition systems used to be built using *phonemes* and this were, I want to say, hand-engineered basic units of cells.
+    - Linguists use to hypothesize that writing down audio in terms of these basic units of sound called phonemes would be the best way to do speech recognition.
+- But with end-to-end deep learning, we're finding that phonemes representations are no longer necessary. But instead, you can built systems that input an audio clip and directly output a transcript without needing to use hand-engineered representations like these.
+    - One of the things that made this possible was going to much larger data sets.
+    - Academic data sets on speech recognition might be as a 300 hours, and in academia, 3000 hour data sets of transcribed audio would be considered reasonable size.
+    - But, the best commercial systems are now trains on over 10,000 hours and sometimes over a 100,000 hours of audio.
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2018.png)
+
+*How to build a speech recognition?*
+
+- **Attention model for speech recognition**: one thing you could do is actually do that, where on the horizontal axis, you take in different time frames of the audio input, and then you have an attention model try to output the transcript like, "the quick brown fox".
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2019.png)
+
+**CTC cost for speech recognition**
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2020.png)
+
+- For simplicity, this is a simple of what uni-directional for the RNN, but in practice, this will usually be a bidirectional LSTM and bidirectional GRU and usually, a deeper model. But notice that the number of time steps here is very large and in speech recognition, usually the number of input time steps is much bigger than the number of output time steps.
+    - For example, if you have 10 seconds of audio and your features come at a 100 hertz so 100 samples per second, then a 10 second audio clip would end up with a thousand inputs. But your output might not have a thousand alphabets or characters.
+- The CTC cost function allows the RNN to generate an output like `ttt_h_eee___[]___qqq__`, here `_` is for "blank", `[]` for "space".
+- The basic rule for the CTC cost function is to collapse repeated characters not separated by "blank".
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2021.png)
+
+With a RNN what we really do, is to take an audio clip, maybe compute spectrogram features, and that generates audio features x<1>, x<2>, x<3>, that you pass through an RNN. So, all that remains to be done, is to define the target labels y.
+
+- In the training set, you can set the target labels to be zero for everything before that point, and right after that, to set the target label of one. Then, if a little bit later on, the trigger word was said again at this point, then you can again set the target label to be one.
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2022.png)
+
+quiz:
+
+![image.png](course%205%201b7ff401be374ddc93cfd54496cb5a8c/image%2023.png)
