@@ -7,6 +7,24 @@
 
 [SRA](https://www.sravjti.in/) Eklavya 2024 ✨<br></h2>
 
+<!-- TABLE OF CONTENTS -->
+## Table of contents
+
+- [About the project](#about-the-project)
+  - [Aim](#aim)
+  - [Description](#Description)
+  - [Tech Stack](#Tech-Stack)
+  - [Dataset](#Dataset)
+  - [File Structure](#file-structure)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+- [Theory and Approach](#theory-and-approach)
+  - [CNN + LSTM Model](#cnn--lstm-model)
+  - [ViT Model](#vision-transformers-model-vit)
+- [Contributors](#contributors)
+- [Acknowledgements](#acknowledgements)
+ 
+
 <!-- ABOUT PROJECT -->
 # 🚀  About the project
 ## ⭐ Aim
@@ -58,7 +76,7 @@ The project uses the [COCO 2017 dataset](https://www.kaggle.com/datasets/awsaf49
 <!-- THEORY AND APPROACH -->
 # Theory and Approach
 ## CNN + LSTM Model
-This is the complete architecture of the CNN + LSTM image captioning model. The CNN encoder basically finds patterns in images and encodes it into a vector that is passed to the LSTM decoder that outputs a word at each time step to best describe the image. Upon reaching the <end> token or the maximum length of the sentence, the entire caption is generated and that is our output for that particular image.
+This is the complete architecture of the CNN + LSTM image captioning model. The CNN encoder basically finds patterns in images and encodes it into a vector that is passed to the LSTM decoder that outputs a word at each time step to best describe the image. Upon reaching the {endseq} token or the maximum length of the sentence, the entire caption is generated and that is our output for that particular image.
 ![cnn+lstm model](assets/image_capt_cnn+lstm.png)
 
 #### 1) Encoder: 
@@ -67,9 +85,9 @@ A pretrained CNN model (ResNet50) is used for feature extraction, transforming i
 An LSTM network is utilized to generate captions by taking image features and previous word embeddings as input to predict the next word.
 
 
-## Vision Transformer (ViT) 
+## Vision Transformers model (ViT) 
 ### What are transformers?
-Before heading into the vision transformer, lets understand transformers.<br> Since the introduction of transformers in 2017 in the paper [Attention is all you need ](https://arxiv.org/abs/1706.03762)by Google Brain, it steered an interest in its capability in NLP
+Before heading into the vision transformer, lets understand transformers.<br> Since the introduction of transformers in the 2017 paper [Attention is all you need ](https://arxiv.org/abs/1706.03762)by Google Brain, it steered an interest in its capability in NLP
 #### Transformer Architecture
 ![Transformer](assets/transformer_encoder_decoder.png)
 <!-- 
@@ -82,13 +100,23 @@ In addition, transformers process inputs in parallel making them more efficient 
 - Decoder: Generates output tokens by attending to both the encoder’s output and previously generated tokens, using masked self-attention and cross-attention.
 
 ### What are Vision Transformers?
-Vision Transformers are models that apply the Transformer architecture to image data by treating image patches as sequences of tokens, enabling the capture of global context and complex dependencies.<br>
-So, the task of image feature extraction that
+The Vision Transformer, or ViT, is a model that employs a Transformer-like architecture over patches of the image. An image is split into fixed-size patches, each of them are then linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder.<br>
+
 
 ![ViT](assets/ViT.png)
+### Image Captioning using ViT
 
+#### 1) ViT Encoder
 
+The task of image feature extraction that was done by the pretrained ResNet50 in the previous model is being done by the ViT in this model.
+<br>
+The Image is divided into patches of equal size and linearly embedded. Since transformers input data parallelly unlike RNNs and LSTMs so we need to add positional encoding to each patch.
+A learnable CLS token is prepended to the final patch + position embeddings which contains the summary of the whole image.
+The final vector is then passed on to transformer encoder which outputs the image feature vector 
 
+The decoder inputs are sequences of continuous text of a certain length, and the targets are the same sequence shifted one token (word or piece of word) to the right. The model uses an internal mask mechanism to ensure that predictions for token i only use inputs from 1 to i, without accessing future tokens.
+
+The model employs cross-attention mechanisms to integrate information from both the encoded image features and the textual sequence. The cross-attention layer allows the decoder to focus on different parts of the image while generating each word in the caption
 
 
 
