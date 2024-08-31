@@ -137,8 +137,11 @@ equals to the vocabulary size
 
 #### 2) Predicted Captions
 ![result1](assets/result1.png)
+
 ![result2](assets/result2.png)
+
 ![result3](assets/result3.png)
+
 ![result4](assets/result4.png)
 
 #### some fails
