@@ -7,6 +7,8 @@
 
 [SRA](https://www.sravjti.in/) Eklavya 2024 ✨<br></h2>
 
+![](./assets/results_gif.gif)
+
 <!-- TABLE OF CONTENTS -->
 # ✏️ Table of contents
 
