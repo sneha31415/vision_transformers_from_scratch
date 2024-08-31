@@ -110,7 +110,7 @@ In addition, transformers process inputs in parallel making them more efficient 
 Vision Transformers were introduced in the 2020 paper [An Image is worth 16x16 words](https://arxiv.org/abs/2010.11929).<br >
 The Vision Transformer, or ViT, is a model that employs a Transformer-like architecture over patches of the image. An image is split into fixed-size patches, each of them are then linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder.<br>
 
-### 🌟 Image Captioning using ViT
+### 🌟 Image Captioning using ViT from scratch 💥
 
 ![vit caption](assets/image_capt_ViT.png)
 #### 1) ViT Encoder
