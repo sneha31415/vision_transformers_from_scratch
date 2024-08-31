@@ -1,5 +1,5 @@
 <p>
-<h1 align = "center" > <strong>Vision Transformers From Scratch</strong> <br></h1>
+<h1 align = "center" > <strong>🚀 Vision Transformers From Scratch</strong> <br></h1>
 
 <h2 align = "center">
 
@@ -8,35 +8,36 @@
 [SRA](https://www.sravjti.in/) Eklavya 2024 ✨<br></h2>
 
 <!-- TABLE OF CONTENTS -->
-## Table of contents
+## ✏️ Table of contents
 
-- [About the project](#about-the-project)
+- [About the project](#-about-the-project)
   - [Aim](#aim)
-  - [Description](#️-description)
-  - [Tech Stack](#-Tech-Stack)
-  - [Dataset](#-Dataset)
+  - [Description](#description)
+  - [Tech Stack](#Tech-Stack)
+  - [Dataset](#Dataset)
   - [File Structure](#-file-structure)
 - [Getting Started](#-getting-started)
-  - [Installation](#-installation)
+  - [Installation](#installation)
 - [Theory and Approach](#-theory-and-approach)
   - [CNN + LSTM Model](#cnn--lstm-model)
   - [ViT Model](#vision-transformers-model-vit)
-- [Results](#results)
+- [Results](#-results)
   - [CNN + LSTM model](#cnn--lstm-model-1)
   - [ViT model](#vit-model)
+- [Applications](#-applications)
 - [Contributors](#contributors)
-- [Acknowledgements](#acknowledgements)
+- [Acknowledgements](#acknowledgements-and-resources)
  
 
 <!-- ABOUT PROJECT -->
-# 🚀  About the project
-## ⭐ Aim
+# ⭐ About the project
+## Aim
 The aim of this project is to generate descriptive captions for images by combining the power of Transformers and computer vision.
 
-## ✏️ Description
+## Description
 This project focuses on image captioning using Vision Transformers (ViT), implemented from scratch. Initially, a basic CNN + LSTM approach was employed to establish a baseline. We then transitioned to a more advanced Vision Transformer (ViT) model to leverage its capability in capturing long-range dependencies in image data.
 
-## 🤖 Tech Stack
+## Tech Stack
 ### Programming Language
  ![Static Badge](https://img.shields.io/badge/Python-white?style=for-the-badge&logo=python&labelColor=black&color=%5C)
 
@@ -58,7 +59,7 @@ This project focuses on image captioning using Vision Transformers (ViT), implem
 ![Static Badge](https://img.shields.io/badge/NLTK-silver?style=for-the-badge&logo=python&logoColor=pink&labelColor=black)
 <br><br>
 
-## 📓 Dataset
+## Dataset
 The project uses the [COCO 2017 dataset](https://www.kaggle.com/datasets/awsaf49/coco-2017-dataset) , a comprehensive dataset comprising of 5 descriptive captions for each image.<br>
 <br>
 
@@ -135,7 +136,7 @@ The output feature of the last decoder layer is utilized to
 predict next word via a linear layer whose output dimension
 equals to the vocabulary size
 
-## Results
+## 🤖 Results
 ### CNN + LSTM Model
 
 #### 1) Bleu score
