@@ -120,6 +120,7 @@ The encoder of CPTR consists of `Nx`
  stacked identical
 layers, each of which consists of a multi-head self-attention
 (MHA) sublayer followed by a positional feed-forward sublayer. MHA contains H parallel heads and each head hi corresponds to an independent scaled dot-product attention function which allows the model to jointly attend to different subspaces.
+
 ![alt text](assets/attention_formula.png)
 
 #### 2) Transformer Decoder
