@@ -21,6 +21,9 @@
 - [Theory and Approach](#theory-and-approach)
   - [CNN + LSTM Model](#cnn--lstm-model)
   - [ViT Model](#vision-transformers-model-vit)
+- [Results](#results)
+  - [CNN + LSTM model](#cnn--lstm-model)
+  - [ViT model](#vit-model)
 - [Contributors](#contributors)
 - [Acknowledgements](#acknowledgements)
  
@@ -87,7 +90,7 @@ An LSTM network is utilized to generate captions by taking image features and pr
 
 ## Vision Transformers model (ViT) 
 ### What are transformers?
-Before heading into the vision transformer, lets understand transformers.<br> Since the introduction of transformers in the 2017 paper [Attention is all you need ](https://arxiv.org/abs/1706.03762)by Google Brain, it steered an interest in its capability in NLP
+Before heading into vision transformers, lets understand transformers.<br> Since the introduction of transformers in the 2017 paper [Attention is all you need ](https://arxiv.org/abs/1706.03762)by Google Brain, it steered an interest in its capability in NLP
 #### Transformer Architecture
 ![Transformer](assets/transformer_encoder_decoder.png)
 <!-- 
@@ -102,27 +105,48 @@ In addition, transformers process inputs in parallel making them more efficient 
 ### What are Vision Transformers?
 The Vision Transformer, or ViT, is a model that employs a Transformer-like architecture over patches of the image. An image is split into fixed-size patches, each of them are then linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder.<br>
 
-
-![ViT](assets/ViT.png)
 ### Image Captioning using ViT
 
+![vit caption](assets/image_capt_ViT.png)
 #### 1) ViT Encoder
+As depicted in Fig, instead of using a pretrained CNN or
+Faster R-CNN model to extract spatial features or bottom-up
+features like the previous methods, we divide the original image into a sequence of image patches to adapt to the input
+form of Transformer. We used a Conv2D layer(due to performance gain reasons) with a stride and kernel size equal to patch size. Alternatively you can also use linear layer here. and then reshape the 4D tensor to 3D to flatten it. Then add the learnable position embeddings.<br>
 
-The task of image feature extraction that was done by the pretrained ResNet50 in the previous model is being done by the ViT in this model.
-<br>
-The Image is divided into patches of equal size and linearly embedded. Since transformers input data parallelly unlike RNNs and LSTMs so we need to add positional encoding to each patch.
-A learnable CLS token is prepended to the final patch + position embeddings which contains the summary of the whole image.
-The final vector is then passed on to transformer encoder which outputs the image feature vector 
+The encoder of CPTR consists of Ne stacked identical
+layers, each of which consists of a multi-head self-attention
+(MHA) sublayer followed by a positional feed-forward sublayer. MHA contains H parallel heads and each head hi corresponds to an independent scaled dot-product attention function which allows the model to jointly attend to different subspaces.
+![alt text](assets/attention_formula.png)
 
-The decoder inputs are sequences of continuous text of a certain length, and the targets are the same sequence shifted one token (word or piece of word) to the right. The model uses an internal mask mechanism to ensure that predictions for token i only use inputs from 1 to i, without accessing future tokens.
+#### 2) Transformer Decoder
+In the decoder side, we add positional embedding to
+the word embedding features and take the addition of encoder output and decoder 1st layer results as the input.<br> 
 
-The model employs cross-attention mechanisms to integrate information from both the encoded image features and the textual sequence. The cross-attention layer allows the decoder to focus on different parts of the image while generating each word in the caption
+The decoder consists of Nd stacked identical layers with each layer containing a masked multi-head self-attention sublayer followed
+by a multi-head cross attention sublayer and a feedforward sublayer sequentially.
+The output feature of the last decoder layer is utilized to
+predict next word via a linear layer whose output dimension
+equals to the vocabulary size
 
+## Results
+### CNN + LSTM Model
 
+#### 1) Bleu score
+- The CNN + LSTM model achieved a BLEU-1 score of <u>0.553085</u> and BLEU-2 score of <u>0.333717</u> 
 
+#### 2) Predicted Captions
+![result1](assets/result1.png)
+![result2](assets/result2.png)
+![result3](assets/result3.png)
+![result4](assets/result4.png)
 
+#### some fails
+![fail1](assets/fail1.png)
+![fail2](assets/fail2.png)
 
-
+### ViT Model
+![Static Badge](https://img.shields.io/badge/coming%20soon-red?style=flat-square)
 
 ## Contributors
 
