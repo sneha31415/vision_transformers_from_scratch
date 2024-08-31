@@ -56,14 +56,16 @@ This project focuses on image captioning using Vision Transformers (ViT), implem
 
 ### Natural Language Processsing
 ![Static Badge](https://img.shields.io/badge/NLTK-silver?style=for-the-badge&logo=python&logoColor=pink&labelColor=black)
-
+<br><br>
 
 ## 📓 Dataset
 The project uses the [COCO 2017 dataset](https://www.kaggle.com/datasets/awsaf49/coco-2017-dataset) , a comprehensive dataset comprising of 5 descriptive captions for each image.<br>
-
+<br>
 
 ## 📁 File structure
 ![Static Badge](https://img.shields.io/badge/coming%20soon-red?style=flat-square)
+<br>
+<br>
 
 
 
