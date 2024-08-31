@@ -160,12 +160,24 @@ equals to the vocabulary size
 
 - [Akash Kawle](https://github.com/shinymack) - ackawle_b23@et.vjti.ac.in
 
-## Acknowledgements 
-- [SRA VJTI](https://www.sravjti.in/) Eklavya 2024
-  
-A heartful gratitude to the mentors of this project:
-- [Aryan Nanda](https://github.com/AryanNanda17)
-- [Abhinav Ananthu](https://github.com/Herculoxz)
+## Acknowledgements and Resources
+
+- Special thanks to [SRA VJTI](https://www.sravjti.in/) for Eklavya 2024
+
+- A heartful gratitude to our mentors [Aryan Nanda](https://github.com/AryanNanda17) and [Abhinav Ananthu](https://github.com/Herculoxz) for guiding us throughout this project
+
+- [Deep learning specialization](https://www.coursera.org/specializations/deep-learning) for their course on Neural Networks and Deep Learning.
+
+- [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) for understanding Vision Transformers(ViTs)
+
+- [Attention is all you need](https://arxiv.org/abs/1706.03762) for understanding the transformer architecture
+
+- [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) for understanding residual functions
+
+
+
+
+
   <br/>
 
 
