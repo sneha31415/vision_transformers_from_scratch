@@ -8,7 +8,7 @@
 [SRA](https://www.sravjti.in/) Eklavya 2024 ✨<br></h2>
 
 <!-- TABLE OF CONTENTS -->
-## ✏️ Table of contents
+# ✏️ Table of contents
 
 - [About the project](#-about-the-project)
   - [Aim](#aim)
