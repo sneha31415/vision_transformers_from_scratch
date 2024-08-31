@@ -14,15 +14,15 @@
   - [Aim](#aim)
   - [Description](#️-description)
   - [Tech Stack](#-Tech-Stack)
-  - [Dataset](#Dataset)
-  - [File Structure](#file-structure)
-- [Getting Started](#getting-started)
+  - [Dataset](#-Dataset)
+  - [File Structure](#-file-structure)
+- [Getting Started](#-getting-started)
   - [Installation](#-installation)
-- [Theory and Approach](#theory-and-approach)
+- [Theory and Approach](#-theory-and-approach)
   - [CNN + LSTM Model](#cnn--lstm-model)
   - [ViT Model](#vision-transformers-model-vit)
 - [Results](#results)
-  - [CNN + LSTM model](#cnn--lstm-model)
+  - [CNN + LSTM model](#cnn--lstm-model-1)
   - [ViT model](#vit-model)
 - [Contributors](#contributors)
 - [Acknowledgements](#acknowledgements)
@@ -58,26 +58,27 @@ This project focuses on image captioning using Vision Transformers (ViT), implem
 ![Static Badge](https://img.shields.io/badge/NLTK-silver?style=for-the-badge&logo=python&logoColor=pink&labelColor=black)
 
 
-## Dataset
+## 📓 Dataset
 The project uses the [COCO 2017 dataset](https://www.kaggle.com/datasets/awsaf49/coco-2017-dataset) , a comprehensive dataset comprising of 5 descriptive captions for each image.<br>
 
 
-## File structure
+## 📁 File structure
 ![Static Badge](https://img.shields.io/badge/coming%20soon-red?style=flat-square)
 
 
 
 <!-- GETTING STARTED -->
-# Getting started
-## 🛠 Installation
+# 🛠 Getting started
+## Installation
 1) Clone the repo<br>
 `git clone https://github.com/sneha31415/vision_transformers_from_scratch.git`
 
 2) Navigate to the project directory<br>
 `cd vision_transformers_from_scratch` 
+<br><br>
 
 <!-- THEORY AND APPROACH -->
-# Theory and Approach
+# 📝 Theory and Approach
 ## CNN + LSTM Model
 This is the complete architecture of the CNN + LSTM image captioning model. The CNN encoder basically finds patterns in images and encodes it into a vector that is passed to the LSTM decoder that outputs a word at each time step to best describe the image. Upon reaching the {endseq} token or the maximum length of the sentence, the entire caption is generated and that is our output for that particular image.
 ![cnn+lstm model](assets/image_capt_cnn+lstm.png)
@@ -102,20 +103,21 @@ In addition, transformers process inputs in parallel making them more efficient 
 - **Encoder**: Converts input tokens into continuous representations using self-attention to capture relationships between all tokens simultaneously.
 - **Decoder**: Generates output tokens by attending to both the encoder’s output and previously generated tokens, using masked self-attention and cross-attention.
 
-### So What are Vision Transformers?
-Vision Transformers were introduced in the 2020 paper [An Image is worth 16x16 words](https://arxiv.org/abs/2010.11929).
+### So... What are Vision Transformers?
+Vision Transformers were introduced in the 2020 paper [An Image is worth 16x16 words](https://arxiv.org/abs/2010.11929).<br >
 The Vision Transformer, or ViT, is a model that employs a Transformer-like architecture over patches of the image. An image is split into fixed-size patches, each of them are then linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder.<br>
 
-### Image Captioning using ViT
+### 🌟 Image Captioning using ViT
 
 ![vit caption](assets/image_capt_ViT.png)
 #### 1) ViT Encoder
-As depicted in Fig, instead of using a pretrained CNN or
+As depicted in the figure, instead of using a pretrained CNN or
 Faster R-CNN model to extract spatial features or bottom-up
 features like the previous methods, we divide the original image into a sequence of image patches to adapt to the input
 form of Transformer. We used a Conv2D layer(due to performance gain reasons) with a stride and kernel size equal to patch size. Alternatively you can also use linear layer here. and then reshape the 4D tensor to 3D to flatten it. Then add the learnable position embeddings.<br>
 
-The encoder of CPTR consists of Ne stacked identical
+The encoder of CPTR consists of `Nx`
+ stacked identical
 layers, each of which consists of a multi-head self-attention
 (MHA) sublayer followed by a positional feed-forward sublayer. MHA contains H parallel heads and each head hi corresponds to an independent scaled dot-product attention function which allows the model to jointly attend to different subspaces.
 ![alt text](assets/attention_formula.png)
@@ -124,7 +126,7 @@ layers, each of which consists of a multi-head self-attention
 In the decoder side, we add positional embedding to
 the word embedding features and take the addition of encoder output and decoder 1st layer results as the input.<br> 
 
-The decoder consists of Nd stacked identical layers with each layer containing a masked multi-head self-attention sublayer followed
+The decoder consists of `Nd` stacked identical layers with each layer containing a masked multi-head self-attention sublayer followed
 by a multi-head cross attention sublayer and a feedforward sublayer sequentially.
 The output feature of the last decoder layer is utilized to
 predict next word via a linear layer whose output dimension
@@ -151,6 +153,20 @@ equals to the vocabulary size
 
 ### ViT Model
 ![Static Badge](https://img.shields.io/badge/coming%20soon-red?style=flat-square)
+
+
+## 🌎 Applications:
+- **Enhanced Image Understanding: 
+Generates more accurate and context-aware captions by capturing complex 
+relationships within images.**
+
+- **Accessibility: 
+Improves accessibility for visually impaired users by converting visual information into descriptive text.**
+
+- **Image Search and Organization: Enhances image search engines by providing detailed descriptions, aiding in better indexing and retrieval.**
+
+- **E-commerce: Provides detailed product descriptions in online catalogs, improving user experience and product discovery.**
+
 
 ## Contributors
 
