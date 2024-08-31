@@ -7,7 +7,7 @@
 
 [SRA](https://www.sravjti.in/) Eklavya 2024 ✨<br></h2>
 
-
+<!-- ABOUT PROJECT -->
 # About the project
 ## ⭐ Aim
 The aim of this project is to implement Vision Transformers (ViT) from scratch for image captioning, demonstrating their superiority over traditional CNN + LSTM models in generating more accurate and descriptive captions. 
@@ -34,10 +34,36 @@ This project focuses on image captioning using Vision Transformers (ViT), implem
 ![Static Badge](https://img.shields.io/badge/OpenCV-blue?style=for-the-badge&logo=OpenCV&labelColor=black)
 
 ## Dataset
-[COCO 2017 Dataset from kaggle](https://www.kaggle.com/datasets/awsaf49/coco-2017-dataset)
+The project uses the [COCO 2017 dataset](https://www.kaggle.com/datasets/awsaf49/coco-2017-dataset) , a comprehensive dataset comprising of 5 descriptive captions for each image.<br>
+
 
 ## File structure
 ![Static Badge](https://img.shields.io/badge/coming%20soon-red?style=flat-square)
+
+
+
+<!-- GETTING STARTED -->
+# Getting started
+## 🛠 Installation
+1) Clone the repo<br>
+`git clone https://github.com/sneha31415/vision_transformers_from_scratch.git`
+
+2) Navigate to the project directory<br>
+`cd vision_transformers_from_scratch` 
+
+<!-- THEORY AND APPROACH -->
+# Theory and Approach
+## CNN + LSTM Model
+This is the complete architecture of the CNN + LSTM image captioning model. The CNN encoder basically finds patterns in images and encodes it into a vector that is passed to the LSTM decoder that outputs a word at each time step to best describe the image. Upon reaching the <end> token or the maximum length of the sentence, the entire caption is generated and that is our output for that particular image.
+![cnn+lstm model](assets/image_capt_cnn+lstm.png)
+
+#### 1) Encoder: 
+A pretrained CNN model (ResNet50) is used for feature extraction, transforming input images into fixed-length feature vectors.
+#### 2) Decoder: 
+An LSTM network is utilized to generate captions by taking image features and previous word embeddings as input to predict the next word.
+
+
+## Vision Transformer (ViT) 
 
 
 
