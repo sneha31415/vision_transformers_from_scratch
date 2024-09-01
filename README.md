@@ -201,5 +201,3 @@ Improves accessibility for visually impaired users by converting visual informat
 
 
   <br/>
-
-
