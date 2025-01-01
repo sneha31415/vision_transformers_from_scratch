@@ -1,0 +1,7 @@
+numpy==1.26.4
+pandas==2.1.4
+torch==2.4.1+cu121
+torchvision==0.19.1+cu121
+cv2==4.10.0
+PIL==10.4.0
+tqdm==4.66.5
